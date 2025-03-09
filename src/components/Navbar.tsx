@@ -22,10 +22,6 @@ const navLinks = [
     href: "/layanan",
   },
   {
-    title: "Portofolio",
-    href: "/portofolio",
-  },
-  {
     title: "Kontak",
     href: "/kontak",
   },
