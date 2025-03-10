@@ -1,7 +1,11 @@
 // import About from "@/components/About";
+import Benefit from "@/components/Benefit";
 import BookCatalog from "@/components/BookCatalog";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
+import Services from "@/components/Services";
+import Testimoni from "@/components/Testimoni";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -9,7 +13,11 @@ export default function Home() {
       <Navbar />
       <Header />
       {/* <About /> */}
-      <BookCatalog/>
+      <BookCatalog />
+      <Benefit />
+      <Services />
+      <Testimoni />
+      <Footer />
     </>
   );
 }

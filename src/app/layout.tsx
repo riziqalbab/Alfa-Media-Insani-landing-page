@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`${montserrat.variable} text-slate-900`}>{children}</body>
+      <body className={`${montserrat.variable} text-slate-900 overflow-x-hidden`}>{children}</body>
     </html>
   );
 }
