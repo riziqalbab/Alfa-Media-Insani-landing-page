@@ -14,13 +14,16 @@ function Testimoni() {
       <div className="w-full ">
         <Carousel>
           <CarouselContent className="">
-            <CarouselItem className="w-full lg:basis-1/2 flex items-center justify-center">
+            <CarouselItem className="w-full lg:basis-1/3 flex items-center justify-center">
               <CardTesti />
             </CarouselItem>
-            <CarouselItem className="w-full lg:basis-1/2 flex items-center justify-center">
+            <CarouselItem className="w-full lg:basis-1/3 flex items-center justify-center">
               <CardTesti />
             </CarouselItem>
-            <CarouselItem className="w-full lg:basis-1/2 flex items-center justify-center">
+            <CarouselItem className="w-full lg:basis-1/3 flex items-center justify-center">
+              <CardTesti />
+            </CarouselItem>
+            <CarouselItem className="w-full lg:basis-1/3 flex items-center justify-center">
               <CardTesti />
             </CarouselItem>
           </CarouselContent>

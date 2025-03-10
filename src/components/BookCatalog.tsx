@@ -64,7 +64,7 @@ export default function BookCatalog() {
             REKOMENDASI BUKU
           </h2>
           <Link
-            href="/books/popular"
+            href="/katalog"
             className="text-sm text-emerald-500 hover:text-emerald-600 flex items-center"
           >
             LIHAT SEMUA <ChevronRight className="h-4 w-4 ml-1" />
@@ -79,25 +79,19 @@ export default function BookCatalog() {
       </div>
 
       {/* Pre Order Section */}
-      {/* <div className="mb-12">
+      <div className="mb-12">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-medium text-gray-700 border-b-2 border-emerald-500 pb-1 inline-block">
-            Pre Order
+            BUKU TERBARU
           </h2>
-          <Link
-            href="/books/preorder"
-            className="text-sm text-emerald-500 hover:text-emerald-600 flex items-center"
-          >
-            Show more <ChevronRight className="h-4 w-4 ml-1" />
-          </Link>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {preOrderBooks.map((book) => (
+          {data.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}
         </div>
-      </div> */}
+      </div>
 
       {/* Show All Books Button */}
       <div className="flex justify-center">
@@ -105,7 +99,7 @@ export default function BookCatalog() {
           asChild
           className="bg-emerald-500 hover:bg-emerald-600 text-white px-8"
         >
-          <Link href="/books">Tampilkan semua buku</Link>
+          <Link href="/katalog">Tampilkan semua buku</Link>
         </Button>
       </div>
     </div>

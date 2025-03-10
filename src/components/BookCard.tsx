@@ -15,7 +15,7 @@ interface BookCardProps {
 
 export default function BookCard({ book }: BookCardProps) {
   return (
-    <Link href={`/books/${book.slug}`} className="group">``
+    <Link href={`/books/${book.slug}`} className="group">
       <div className="flex flex-col h-full">
         <div className="relative aspect-[3/4] mb-2 overflow-hidden rounded-md">
           <img

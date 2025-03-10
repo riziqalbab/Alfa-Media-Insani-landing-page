@@ -25,9 +25,9 @@ function Header() {
               <div className="relative">
                 <div className="relative z-10 bg-emerald-100 rounded-lg overflow-hidden">
                   <img
-                    src="https://picsum.photos/1920/720"
-                    alt="Woman with cleaning supplies"
-                    className="object-cover w-full"
+                    src="https://digitalmadrasah.id/assets/images/siswi.png"
+                    alt=""
+                    className="object-cover w-full max-w-xl"
                   />
                 </div>
               </div>
@@ -59,7 +59,7 @@ function Header() {
 
               <div className="mt-6">
                 <Link
-                  href="#"
+                  href="/tentang"
                   className="inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition-colors"
                 >
                   TENTANG KAMI
