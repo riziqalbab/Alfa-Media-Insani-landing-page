@@ -25,8 +25,8 @@ export default function Benefit() {
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 rounded-full bg-indigo-200 flex-shrink-0"></div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">Siswa</h3>
-                  <p className="text-gray-600">Belajar lebih asik bersama Buku Kemendikbud</p>
+                  <h3 className="text-xl font-semibold mb-2">Santri</h3>
+                  <p className="text-gray-600">Belajar lebih asik bersama Buku</p>
                 </div>
               </div>
             </CardContent>
