@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import FeaturedCategories from "./FeaturedCategories";
 import HeaderCarousel from "./HeaderCarousel";

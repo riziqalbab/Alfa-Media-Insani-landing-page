@@ -99,7 +99,7 @@ export default function BookCatalog() {
           asChild
           className="bg-emerald-500 hover:bg-emerald-600 text-white px-8"
         >
-          <Link href="/katalog">Tampilkan semua buku</Link>
+          <Link href="/katalog">LIHAT KATALOG BUKU</Link>
         </Button>
       </div>
     </div>

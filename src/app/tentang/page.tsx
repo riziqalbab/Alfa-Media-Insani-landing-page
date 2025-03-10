@@ -24,7 +24,7 @@ export default function AboutUsPage() {
                 Siapa Kami
               </h2>
               <p className="text-muted-foreground md:text-lg">
-                Platform Edukasi Online yang di kembangkan untuk menunjang
+                Platform Edukasi Online yang dikembangkan untuk menunjang
                 edukasi kolaborasi Semangat mencerdaskan bangsa tak pernah
                 luntur. Majulah bangsaku
               </p>

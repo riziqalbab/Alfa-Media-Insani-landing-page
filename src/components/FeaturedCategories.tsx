@@ -34,7 +34,7 @@ export default function FeaturedCategories() {
       <div className="container mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-medium">KATEGORI UNGGULAN</h2>
-          <Link href="#" className="text-sm text-gray-500 flex items-center hover:text-gray-700 transition-colors">
+          <Link href="/katalog" className="text-sm text-gray-500 flex items-center hover:text-gray-700 transition-colors">
             Semua Kategori <ArrowRight className="h-4 w-4 ml-1" />
           </Link>
         </div>
