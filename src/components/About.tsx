@@ -57,7 +57,7 @@ export default function About() {
 
             <div className="mt-6">
               <Link
-                href="#"
+                href="/tentang"
                 className="inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition-colors"
               >
                 TENTANG KAMI
