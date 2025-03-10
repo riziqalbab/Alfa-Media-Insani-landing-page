@@ -30,7 +30,7 @@ export default function FeaturedCategories() {
   ]
 
   return (
-    <section className="w-full py-8 px-4 md:px-6">
+    <section className="w-full py-8 md:px-6">
       <div className="container mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-medium">KATEGORI UNGGULAN</h2>
