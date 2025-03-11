@@ -10,7 +10,7 @@ const data = [
     id: 1,
     title: "A Cup of Coffee",
     author: "Dee Lestari",
-    price: 77000,
+    price: "77000",
     coverImage: "https://picsum.photos/1920/720",
     slug: "a-cup-of-coffee",
   },
@@ -18,7 +18,7 @@ const data = [
     id: 2,
     title: "Sebuah Seni Untuk Bersikap Bodo Amat",
     author: "Mark Manson",
-    price: 53500,
+    price: "53500",
     coverImage: "https://picsum.photos/1920/720",
     slug: "sebuah-seni-untuk-bersikap-bodo-amat",
   },
@@ -26,7 +26,7 @@ const data = [
     id: 3,
     title: "Winter",
     author: "Marissa Meyer",
-    price: 97200,
+    price: "97200",
     coverImage: "https://picsum.photos/1920/720",
     slug: "winter",
   },
@@ -34,7 +34,7 @@ const data = [
     id: 4,
     title: "The Maze Runner #3: The Scorch Trials - New",
     author: "James Dashner",
-    price: 51750,
+    price: "51750",
     coverImage: "https://picsum.photos/1920/720",
     slug: "the-maze-runner-3",
   },
@@ -42,7 +42,7 @@ const data = [
     id: 5,
     title: "Fantastic Beasts and Where to Find Them",
     author: "J.K. Rowling",
-    price: 86150,
+    price: "86150",
     coverImage: "https://picsum.photos/1920/720",
     slug: "fantastic-beasts",
   },
@@ -50,7 +50,7 @@ const data = [
     id: 6,
     title: "One Piece 92",
     author: "Eiichiro Oda",
-    price: 77000,
+    price: "77000",
     coverImage: "https://picsum.photos/1920/720",
     slug: "one-piece-92",
   },
@@ -60,6 +60,10 @@ export default function BookCatalog() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Popular Section */}
+      <div className="text-center">
+        <h1 className="text-3xl font-bold mb-4">Temukan Buku Pilihan</h1>
+        <p>Koleksi buku terbaru dan terbaik dari Penerbit Alfa Media Insani untuk kebutuhan pendidikan Anda.</p>
+      </div>
       <div className="mb-12">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-medium text-gray-700 border-b-2 border-emerald-500 pb-1 inline-block">
