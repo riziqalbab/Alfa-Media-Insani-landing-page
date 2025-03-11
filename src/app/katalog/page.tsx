@@ -3,7 +3,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Slider } from "@/components/ui/slider"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
   Pagination,
@@ -250,91 +249,7 @@ function MobileFilterPanel() {
         </AccordionItem>
       </Accordion>
 
-      {/* Rentang Harga */}
-      <Accordion type="single" collapsible defaultValue="harga">
-        <AccordionItem value="harga" className="border-b">
-          <AccordionTrigger className="text-base font-medium">Rentang Harga</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-4">
-              <Slider defaultValue={[50000, 150000]} min={0} max={300000} step={10000} />
-              <div className="flex items-center justify-between">
-                <div className="text-sm">Rp 50.000</div>
-                <div className="text-sm">Rp 150.000</div>
-              </div>
-              <div className="flex gap-2">
-                <Input type="number" placeholder="Min" className="w-full" defaultValue={50000} />
-                <Input type="number" placeholder="Max" className="w-full" defaultValue={150000} />
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
 
-      {/* Penulis */}
-      <Accordion type="single" collapsible>
-        <AccordionItem value="penulis" className="border-b">
-          <AccordionTrigger className="text-base font-medium">Penulis</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-2">
-              {["M Alaika Salamulloh", "Yuslim Fauzi", "Ismail", "Fatah Yasin", "Tim Penulis"].map((author) => (
-                <div key={author} className="flex items-center space-x-2">
-                  <Checkbox id={`mobile-author-${author.toLowerCase().replace(/\s+/g, "-")}`} />
-                  <label
-                    htmlFor={`mobile-author-${author.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {author}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      {/* Tahun Terbit */}
-      <Accordion type="single" collapsible>
-        <AccordionItem value="tahun" className="border-b">
-          <AccordionTrigger className="text-base font-medium">Tahun Terbit</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-2">
-              {["2023", "2022", "2021", "2020", "2019"].map((year) => (
-                <div key={year} className="flex items-center space-x-2">
-                  <Checkbox id={`mobile-year-${year}`} />
-                  <label
-                    htmlFor={`mobile-year-${year}`}
-                    className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {year}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      {/* Status */}
-      <Accordion type="single" collapsible>
-        <AccordionItem value="status" className="border-b">
-          <AccordionTrigger className="text-base font-medium">Status</AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-2">
-              {["Promo", "Baru", "Terlaris", "Pre-Order"].map((status) => (
-                <div key={status} className="flex items-center space-x-2">
-                  <Checkbox id={`mobile-status-${status.toLowerCase().replace(/\s+/g, "-")}`} />
-                  <label
-                    htmlFor={`mobile-status-${status.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {status}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
 
       <Button className="w-full">Terapkan Filter</Button>
     </div>
