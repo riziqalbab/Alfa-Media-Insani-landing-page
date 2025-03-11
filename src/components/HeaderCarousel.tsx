@@ -13,22 +13,22 @@ function HeaderCarousel() {
   const featuredBooks = [
     {
       id: 1,
-      title: "The Girl",
+      title: "",
       coverImage: "https://picsum.photos/1920/720",
     },
     {
       id: 2,
-      title: "The Girl",
+      title: "",
       coverImage: "https://picsum.photos/1920/720",
     },
     {
       id: 3,
-      title: "The Girl",
+      title: "",
       coverImage: "https://picsum.photos/1920/720",
     },
     {
       id: 4,
-      title: "The Girl",
+      title: "",
       coverImage: "https://picsum.photos/1920/720",
     },
   ];
