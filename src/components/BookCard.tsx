@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
+import Link from "next/link"
+
 interface BookCardProps {
   imageSrc: string
   title: string
@@ -9,7 +11,7 @@ interface BookCardProps {
 
 function BookCard({ imageSrc, title, author, price }: BookCardProps) {
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-lg border bg-white">
+    <Link href="katalog/test" className="group relative flex flex-col overflow-hidden rounded-lg border bg-white">
       <div className="relative aspect-[3/4] bg-gray-100">
         <img
           src={imageSrc || "https://placehold.co/600x400"}
@@ -28,7 +30,7 @@ function BookCard({ imageSrc, title, author, price }: BookCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

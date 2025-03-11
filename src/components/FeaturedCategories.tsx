@@ -19,7 +19,6 @@ export default function FeaturedCategories() {
               Anda.
             </p>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <CategoryCard
               icon={<BookOpen className="h-8 w-8 text-primary" />}
