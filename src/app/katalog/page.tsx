@@ -209,7 +209,6 @@ function FilterPanel() {
         </AccordionItem>
       </Accordion>
 
-      {/* Rentang Harga */}
 
       <Button className="w-full">Terapkan Filter</Button>
     </div>
