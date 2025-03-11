@@ -8,7 +8,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "DIGITAL MADRASAH | Platform Baru Edukasi Digital",
+  title: "Alfa Media Insani",
   description: "Akses di mana pun, kapan pun, Baca buku yuk!",
 };
 
