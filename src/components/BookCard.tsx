@@ -1,33 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link"
-
-interface Book {
-  id: number
-  title: string
-  author: string
-  coverImage: string
-  slug: string
-}
+import { Badge } from "@/components/ui/badge"
 
 interface BookCardProps {
-  book: Book
+  imageSrc: string
+  title: string
+  author: string
+  price: number
+  discount?: string
 }
 
-export default function BookCard({ book }: BookCardProps) {
+function BookCard({ imageSrc, title, author, price, discount }: BookCardProps) {
   return (
-    <Link href="/katalog/sfdfds" className="group">
-      <div className="flex flex-col h-full">
-        <div className="relative aspect-[3/4] mb-2 overflow-hidden rounded-md">
-          <img
-            src={book.coverImage || "/placeholder.svg"}
-            alt={book.title}
-            className="object-cover transition-transform group-hover:scale-105 w-full h-full"
-          />
-        </div>
-        <h3 className="font-medium text-sm line-clamp-2">{book.title}</h3>
-        <p className="text-xs text-gray-500 mb-1">{book.author}</p>
+    <div className="group relative flex flex-col overflow-hidden rounded-lg border bg-white">
+      <div className="relative aspect-[3/4] bg-gray-100">
+        <img
+          src={imageSrc || "/placeholder.svg"}
+          alt={title}
+          
+          className="object-cover transition-transform group-hover:scale-105"
+        />
+        {discount && <Badge className="absolute top-2 right-2 bg-red-500">{discount}</Badge>}
       </div>
-    </Link>
+      <div className="flex flex-col space-y-1.5 p-4">
+        <h3 className="font-semibold line-clamp-1">{title}</h3>
+        <p className="text-sm text-gray-500">{author}</p>
+        <div className="flex items-center justify-between">
+          <p className="font-bold">{price}</p>
+          <div className="flex gap-2">
+            
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
+
+export default BookCard

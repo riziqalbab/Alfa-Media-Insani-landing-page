@@ -36,25 +36,24 @@ function Header() {
 
             {/* Right side with text content */}
             <div className="w-full md:w-1/2 md:pl-12">
-              <div className="text-sm text-emerald-600 uppercase font-medium mb-2">
-                TENTANG KAMI
-              </div>
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                PLATFORM BARU EDUKASI DIGITAL
+                Tentang Penerbit Alfa Media Insani
               </h1>
-              <div className="space-y-4 text-gray-600">
+              <div className="w-24 h-1 bg-primary mb-6 rounded-full"></div>
+              <div className="space-y-4 text-gray-600 ">
                 <p>
-                  Visi kami yaitu menghadirkan kemudahan proses belajar mengajar
-                  di madrasah dengan memanfaatkan teknologi informasi terkini
-                  untuk mencetak generasi terbaik demi menyongsong indonesia
-                  emas
+                  Alfa Media Insani adalah penerbitan buku ajar, buku referensi,
+                  buku monograf, buku umum, jurnal penelitian ilmiah hingga
+                  proceeding dalam bentuk cetak maupun E-Book. Dalam
+                  meningkatkan mutu produksi, Penerbit Alfa Media Insani
+                  membangun kerjasama intensif dan komunikatif guna pembangunan
+                  sumberdaya manusia yang berkualitas, kompeten, dan
+                  profesional.
                 </p>
                 <p>
-                  Berbagai Produk hasil karya anak bangsa kami hadirkan untuk
-                  memudahkan proses belajar mengajar di kalangan Madrasah. Untuk
-                  mewujudkannya, kami menjalin kerjasa dengan Perguruan Tinggi
-                  Negeri Ternama di Indonesia ini, agar kemandirian teknologi
-                  juga dapat terbentuk
+                  Menghadirkan kemudahan proses belajar mengajar di madrasah
+                  dengan memanfaatkan teknologi informasi terkini untuk mencetak
+                  generasi terbaik demi menyongsong Indonesia emas
                 </p>
               </div>
 

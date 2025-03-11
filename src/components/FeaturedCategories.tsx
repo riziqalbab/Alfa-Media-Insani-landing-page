@@ -1,58 +1,69 @@
-import { ArrowRight, Atom } from "lucide-react"
-import Link from "next/link"
+import {BookOpen, BookText, GraduationCap, Library, Users } from "lucide-react"
+import { CategoryCard } from "./CategoryCard"
+import { GeometricPattern } from "./ui/GeometricPattern"
 
 export default function FeaturedCategories() {
-  const categories = [
-    {
-      name: "Sains",
-      icon: <Atom className="h-6 w-6 text-purple-700" />,
-      color: "bg-purple-50",
-      link: "#",
-    },
-    {
-      name: "Sains",
-      icon: <Atom className="h-6 w-6 text-purple-700" />,
-      color: "bg-purple-50",
-      link: "#",
-    },
-    {
-      name: "Sains",
-      icon: <Atom className="h-6 w-6 text-purple-700" />,
-      color: "bg-purple-50",
-      link: "#",
-    },
-    {
-      name: "Sains",
-      icon: <Atom className="h-6 w-6 text-purple-700" />,
-      color: "bg-purple-50",
-      link: "#",
-    },
-  ]
+  
 
   return (
-    <section className="w-full py-8 md:px-6">
-      <div className="container mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-medium">KATEGORI UNGGULAN</h2>
-          <Link href="/katalog" className="text-sm text-gray-500 flex items-center hover:text-gray-700 transition-colors">
-            Semua Kategori <ArrowRight className="h-4 w-4 ml-1" />
-          </Link>
-        </div>
+    <section className="py-16 bg-gray-50 w-full flex items-center justify-center relative">
+      
+      <GeometricPattern variant="dots" className="inset-0 text-primary" />
+ 
+        <div className="container z-30">
+          <div className="flex flex-col items-center text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Jelajahi Kategori</h2>
+            <div className="w-24 h-1 bg-primary mb-6"></div>
+            <p className="text-gray-600 max-w-2xl">
+              Alfa Media Insani menyediakan berbagai kategori buku untuk kebutuhan pendidikan dan pengembangan diri
+              Anda.
+            </p>
+          </div>
 
-        <div className="flex flex-wrap gap-4 items-center justify-center">
-          {categories.map((category, index) => (
-            <Link
-              key={index}
-              href={category.link}
-              className={`${category.color} rounded-lg p-4 flex flex-col w-50 items-center text-center transition-transform hover:scale-105`}
-            >
-              <div className="mb-3">{category.icon}</div>
-              <h3 className="text-sm font-medium mb-1">{category.name}</h3>
-            </Link>
-          ))}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <CategoryCard
+              icon={<BookOpen className="h-8 w-8 text-primary" />}
+              title="Buku MI"
+              description="Buku-buku untuk Madrasah Ibtidaiyah dengan kurikulum terbaru"
+            />
+            <CategoryCard
+              icon={<BookText className="h-8 w-8 text-primary" />}
+              title="Buku MTs"
+              description="Buku-buku untuk Madrasah Tsanawiyah dengan kurikulum terbaru"
+            />
+            <CategoryCard
+              icon={<GraduationCap className="h-8 w-8 text-primary" />}
+              title="Buku MA"
+              description="Buku-buku untuk Madrasah Aliyah dengan kurikulum terbaru"
+            />
+            <CategoryCard
+              icon={<Library className="h-8 w-8 text-primary" />}
+              title="Buku Perguruan Tinggi"
+              description="Buku-buku untuk Perguruan Tinggi Agama Islam"
+            />
+            <CategoryCard
+              icon={<BookText className="h-8 w-8 text-primary" />}
+              title="Jurnal Ilmiah"
+              description="Jurnal-jurnal ilmiah untuk penelitian dan referensi akademik"
+            />
+            <CategoryCard
+              icon={<BookOpen className="h-8 w-8 text-primary" />}
+              title="Sastra"
+              description="Buku-buku sastra untuk pengembangan literasi dan apresiasi seni"
+            />
+            <CategoryCard
+              icon={<Users className="h-8 w-8 text-primary" />}
+              title="Forum Komunitas"
+              description="Bergabunglah dengan komunitas pendidikan untuk berbagi pengetahuan"
+            />
+            <CategoryCard
+              icon={<BookText className="h-8 w-8 text-primary" />}
+              title="Resensi"
+              description="Resensi buku-buku terbaru dari Penerbit Alfa Media Insani"
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
   )
 }
 

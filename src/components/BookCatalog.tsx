@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import BookCard from "./BookCard";
 
+
+
 const data = [
   {
     id: 1,
@@ -73,7 +75,7 @@ export default function BookCatalog() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {data.map((book) => (
-            <BookCard key={book.id} book={book} />
+            <BookCard key={book.id} imageSrc={book.coverImage} author={book.author} price={book.price} title={book.title}/>
           ))}
         </div>
       </div>
@@ -88,7 +90,7 @@ export default function BookCatalog() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {data.map((book) => (
-            <BookCard key={book.id} book={book} />
+            <BookCard key={book.id} imageSrc={book.coverImage} author={book.author} price={book.price} title={book.title}/>
           ))}
         </div>
       </div>

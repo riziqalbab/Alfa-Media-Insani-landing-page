@@ -68,8 +68,7 @@ function SearchCorusel() {
   return (
     <div className="p-10 w-full h-full flex items-center lg:items-start justify-center flex-col lg:px-20 bg-gradient-to-r from-slate-50 to-gray-200">
       <div className="text-center lg:text-left">
-        <h2>Platform Baru Edukasi Digital</h2>
-        <h1 className="text-4xl lg:text-6xl font-bold">DIGITAL MADRASAH</h1>
+        <h1 className="text-4xl lg:text-6xl font-bold">Alfa Media Insani</h1>
         <h2>Akses di mana pun, kapan pun, Baca buku yuk!</h2>
       </div>
       <div className="flex mt-5 gap-4">

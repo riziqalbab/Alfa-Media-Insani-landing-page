@@ -27,8 +27,6 @@ export default function About() {
                   className="object-cover w-full"
                 />
               </div>
-
-              
             </div>
           </div>
 
@@ -38,20 +36,21 @@ export default function About() {
               TENTANG KAMI
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              PLATFORM BARU EDUKASI DIGITAL
+              Alfa Media Insani
             </h1>
             <div className="space-y-4 text-gray-600">
               <p>
-                Visi kami yaitu menghadirkan kemudahan proses belajar mengajar
-                di madrasah dengan memanfaatkan teknologi informasi terkini
-                untuk mencetak generasi terbaik demi menyongsong indonesia emas
+                Alfa Media Insani adalah penerbitan buku ajar, buku referensi,
+                buku monograf, buku umum, jurnal penelitian ilmiah hingga
+                proceeding dalam bentuk cetak maupun E-Book. Dalam meningkatkan
+                mutu produksi, Penerbit Alfa Media Insani membangun kerjasama
+                intensif dan komunikatif guna pembangunan sumberdaya manusia
+                yang berkualitas, kompeten, dan profesional.
               </p>
               <p>
-                Berbagai Produk hasil karya anak bangsa kami hadirkan untuk
-                memudahkan proses belajar mengajar di kalangan Madrasah. Untuk
-                mewujudkannya, kami menjalin kerjasa dengan Perguruan Tinggi
-                Negeri Ternama di Indonesia ini, agar kemandirian teknologi juga
-                dapat terbentuk
+                Menghadirkan kemudahan proses belajar mengajar di madrasah
+                dengan memanfaatkan teknologi informasi terkini untuk mencetak
+                generasi terbaik demi menyongsong Indonesia emas
               </p>
             </div>
 
