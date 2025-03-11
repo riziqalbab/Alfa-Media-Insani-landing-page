@@ -18,12 +18,8 @@ const navLinks = [
     href: "/tentang",
   },
   {
-    title: "Layanan",
-    href: "/layanan",
-  },
-  {
-    title: "Kontak",
-    href: "/kontak",
+    title: "Katalog",
+    href: "/katalog",
   },
 ]
 

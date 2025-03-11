@@ -1,16 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-// BookDetailPage.jsx
-import { Button } from "@/components/ui/button";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import {  MessageSquare } from "lucide-react";
 import Link from "next/link";
-// import Image from "next/image";
 
 export default function BookDetailPage() {
   return (
     <div className="container mx-auto px-4 py-6 max-w-7xl">
-      {/* Breadcrumb */}
       <div className="flex text-sm mb-6">
         <Link href="/" className="text-blue-600 hover:underline">
           Beranda
@@ -54,20 +50,16 @@ export default function BookDetailPage() {
               {/* Synopsis */}
               <div className="prose max-w-none mb-8">
                 <p>
-                  Buku Panduan Guru: Belajar dan Bermain Berbasis Buku (Edisi
-                  Revisi) ini disusun sebagai panduan praktis bagi para guru
-                  dalam menerapkan metodologi pembelajaran yang menyenangkan dan
-                  efektif. Pendekatan berbasis buku yang dipaparkan dalam
-                  panduan ini membantu guru menciptakan pengalaman belajar yang
-                  interaktif dan bermakna bagi siswa.
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Voluptatem ad et autem ipsum dignissimos minima, numquam ex
+                  porro officia ipsam qui laboriosam saepe recusandae dolor
+                  praesentium ea blanditiis nostrum? Suscipit?
                 </p>
                 <p>
-                  Panduan ini mencakup berbagai strategi dan aktivitas yang
-                  dapat diimplementasikan di kelas untuk meningkatkan literasi,
-                  kreativitas, dan kecintaan siswa terhadap membaca. Edisi
-                  revisi ini telah disesuaikan dengan Kurikulum Merdeka dan
-                  diperkaya dengan contoh-contoh praktis yang relevan dengan
-                  konteks pendidikan Indonesia.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Magnam ducimus facere culpa dolores laboriosam recusandae.
+                  Sequi totam, alias, iure quibusdam a temporibus iste impedit
+                  magni optio ipsa adipisci. Voluptatum, placeat!
                 </p>
               </div>
 
@@ -88,27 +80,25 @@ export default function BookDetailPage() {
                     ISBN
                   </dt>
                   <dd className="text-gray-800 col-span-2">
-                    978-623-118-100-8
+                    122112121212
                   </dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Edisi
                   </dt>
-                  <dd className="text-gray-800 col-span-2">Revisi</dd>
+                  <dd className="text-gray-800 col-span-2">Versi Majalah Tempo</dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Penulis
                   </dt>
                   <dd className="text-gray-800 col-span-2">
-                    Arleen Amidjaja, Anna Farida Kurniasari, Ni Ekawati
+                    Tan Malaka
                   </dd>
-
                 </dl>
               </div>
             </div>
           </div>
 
-          {/* Decorative elements - dots */}
           <div className="absolute top-4 right-4 opacity-30">
             <svg width="100" height="100" viewBox="0 0 100 100">
               <circle cx="20" cy="20" r="5" fill="#3a87ad" />
@@ -125,25 +115,7 @@ export default function BookDetailPage() {
         </CardContent>
       </Card>
 
-      {/* Reviews Section */}
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Ulasan Pembaca</h2>
-      <Card className="mb-8 bg-gray-50">
-        <CardContent className="p-6 md:p-8 relative">
-          <Button
-            variant="outline"
-            className="absolute right-6 top-6 text-blue-600 border-blue-600 hover:bg-blue-50"
-          >
-            Tulis ulasanmu di sini
-          </Button>
-
-          <div className="flex items-center text-gray-600">
-            <div className="flex-shrink-0 bg-blue-600 text-white rounded-full p-2 mr-3">
-              <MessageSquare className="h-5 w-5" />
-            </div>
-            <span>Belum ada ulasan dari pembaca</span>
-          </div>
-        </CardContent>
-      </Card>
+      
 
       <h2 className="text-2xl font-bold mb-4 text-gray-800">
         Rekomendasi buku lainnya
