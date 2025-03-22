@@ -1,52 +1,88 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+"use client";
+
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { ChevronRight, Search, SlidersHorizontal } from "lucide-react"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+// import { useSearchParams } from "next/navigation";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import BookCard from "@/components/BookCard"
-import { RevealOnScroll } from "@/components/ui/reveal-on-scroll"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ChevronRight, Search, SlidersHorizontal } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Katalog Buku | Alfa Media Insani",
-  description: "Jelajahi koleksi lengkap buku dari Penerbit Alfa Media Insani untuk kebutuhan pendidikan Anda.",
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import BookCard from "@/components/BookCard";
+import { RevealOnScroll } from "@/components/ui/reveal-on-scroll";
+import { useContext, useEffect, useState } from "react";
+
+import axios from "axios";
+import {
+  CategoryContext,
+  CategoryContextProvider,
+} from "@/context/categoryContext";
+
+interface Category {
+  Title: string;
+  Slug: string;
 }
 
-export default function KatalogPage() {
-  // Data dummy untuk buku-buku
-  const books = Array.from({ length: 16 }, (_, i) => ({
-    id: i + 1,
-    title: `Buku ${i + 1}`,
-    author: i % 3 === 0 ? "M Alaika Salamulloh" : i % 3 === 1 ? "Yuslim Fauzi" : "Ismail",
-    price: `Rp ${(75 + i * 5).toLocaleString("id-ID")}`,
-    imageSrc: "https://placehold.co/600x400",
-    category: i % 4 === 0 ? "BUKU MI" : i % 4 === 1 ? "BUKU MTs" : i % 4 === 2 ? "BUKU MA" : "BUKU PTAI",
-    isNew: i % 8 === 0,
-    isBestSeller: i % 9 === 0,
-  }))
+interface Book {
+  isbn: string;
+  author: string;
+  title: string;
+  price: string;
+  image: string;
+}
+
+
+export default function Page(){
+  return (
+    <CategoryContextProvider>
+      <KatalogPage />
+    </CategoryContextProvider>
+  );
+}
+
+ function KatalogPage() {
+  const categoryContext = useContext(CategoryContext);
+
+  const [books, setBooks] = useState<Array<Book>>();
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books?category=${categoryContext.category.join(",")}`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setBooks(res.data.data);
+      });
+  }, [categoryContext]);
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">
-
       <div className="container py-8 relative z-10">
         {/* Breadcrumb */}
         <nav className="flex mb-6 text-sm">
           <ol className="flex items-center space-x-2">
             <li>
-              <Link href="/" className="text-gray-500 hover:text-primary transition-colors duration-300">
+              <Link
+                href="/"
+                className="text-gray-500 hover:text-primary transition-colors duration-300"
+              >
                 Beranda
               </Link>
             </li>
@@ -59,10 +95,13 @@ export default function KatalogPage() {
 
         <RevealOnScroll>
           <div className="mb-8 text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Katalog Buku</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              Katalog Buku
+            </h1>
             <p className="text-gray-600 max-w-3xl mx-auto">
-              Jelajahi koleksi lengkap buku dari Penerbit Alfa Media Insani untuk kebutuhan pendidikan Anda. Temukan
-              buku-buku berkualitas untuk semua jenjang pendidikan.
+              Jelajahi koleksi lengkap buku dari Penerbit Alfa Media Insani
+              untuk kebutuhan pendidikan Anda. Temukan buku-buku berkualitas
+              untuk semua jenjang pendidikan.
             </p>
           </div>
         </RevealOnScroll>
@@ -78,7 +117,9 @@ export default function KatalogPage() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[350px]">
               <div className="py-4">
-                <h2 className="text-lg font-semibold mb-4">Filter & Pencarian</h2>
+                <h2 className="text-lg font-semibold mb-4">
+                  Filter & Pencarian
+                </h2>
                 <MobileFilterPanel />
               </div>
             </SheetContent>
@@ -94,7 +135,6 @@ export default function KatalogPage() {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="flex-1">
             {/* Sorting and View Options */}
             <div className="bg-white p-4 rounded-lg shadow-sm mb-6 border flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -107,31 +147,29 @@ export default function KatalogPage() {
                   <SelectContent>
                     <SelectItem value="terbaru">Terbaru</SelectItem>
                     <SelectItem value="terlaris">Terlaris</SelectItem>
-                    <SelectItem value="harga-terendah">Harga: Terendah</SelectItem>
-                    <SelectItem value="harga-tertinggi">Harga: Tertinggi</SelectItem>
+                    <SelectItem value="harga-terendah">
+                      Harga: Terendah
+                    </SelectItem>
+                    <SelectItem value="harga-tertinggi">
+                      Harga: Tertinggi
+                    </SelectItem>
                     <SelectItem value="abjad-az">Judul: A-Z</SelectItem>
                     <SelectItem value="abjad-za">Judul: Z-A</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-
             </div>
 
-            
-
-            {/* Grid Buku */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-              {books.map((book, index) => (
-                <RevealOnScroll key={book.id} delay={50 * index} threshold={0.1}>
-                  <Link href={`/buku/${book.id}-${book.title.toLowerCase().replace(/\s+/g, "-")}`}>
+              {books?.map((book, index) => (
+                <RevealOnScroll key={index} delay={50 * index} threshold={0.1}>
+                  <Link href={`/buku/${book.isbn}-${book.title}`}>
                     <div className="relative">
-                      
                       <BookCard
-                        imageSrc={book.imageSrc}
+                        imageSrc={`${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${book.image}`}
                         title={book.title}
                         author={book.author}
                         price={book.price}
-                        
                       />
                     </div>
                   </Link>
@@ -140,43 +178,53 @@ export default function KatalogPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex justify-center mt-12">
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious href="#" />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#" isActive>
-                      1
-                    </PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">2</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">3</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">8</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationNext href="#" />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
+            <div className="flex justify-center mt-12"></div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function FilterPanel() {
+  const categoryContext = useContext(CategoryContext);
+
+  const { category, changeCategory } = categoryContext;
+
+  const [categoryData, setCategoryData] = useState<Array<Category>>([]);
+  const [selectedCategories, setSelectedCategories] = useState<Array<string>>(
+    []
+  );
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setCategoryData(res.data.data);
+      });
+  }, []);
+
+  const handleCheckboxChange = (slug: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(slug)
+        ? prev.filter((item) => item !== slug)
+        : [...prev, slug]
+    );
+  };
+
+  const handleApplyFilter = () => {
+    changeCategory(selectedCategories);
+  };
+
+  useEffect(() => {
+    console.log(category);
+  }, [category]);
+
   return (
     <div className="space-y-6">
       {/* Pencarian */}
@@ -190,17 +238,28 @@ function FilterPanel() {
       {/* Kategori */}
       <Accordion type="single" collapsible defaultValue="kategori">
         <AccordionItem value="kategori" className="border-b">
-          <AccordionTrigger className="text-base font-medium">Kategori</AccordionTrigger>
+          <AccordionTrigger className="text-base font-medium">
+            Kategori
+          </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-2">
-              {["Buku MI", "Buku MTs", "Buku MA", "Buku PTAI", "Jurnal Ilmiah", "Sastra"].map((category) => (
-                <div key={category} className="flex items-center space-x-2">
-                  <Checkbox id={`category-${category.toLowerCase().replace(/\s+/g, "-")}`} />
+              {categoryData.map((category, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`category-${category.Slug.toLowerCase().replace(
+                      /\s+/g,
+                      "-"
+                    )}`}
+                    onCheckedChange={() => handleCheckboxChange(category.Slug)}
+                  />
                   <label
-                    htmlFor={`category-${category.toLowerCase().replace(/\s+/g, "-")}`}
+                    htmlFor={`category-${category.Slug.toLowerCase().replace(
+                      /\s+/g,
+                      "-"
+                    )}`}
                     className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {category}
+                    {category.Title}
                   </label>
                 </div>
               ))}
@@ -209,13 +268,28 @@ function FilterPanel() {
         </AccordionItem>
       </Accordion>
 
-
-      <Button className="w-full">Terapkan Filter</Button>
+      <Button className="w-full" onClick={handleApplyFilter}>
+        Terapkan Filter
+      </Button>
     </div>
-  )
+  );
 }
 
 function MobileFilterPanel() {
+  const [categoryData, setCategoryData] = useState<Array<Category>>([]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setCategoryData(res.data.data);
+      });
+  }, []);
   return (
     <div className="space-y-6 p-10">
       {/* Pencarian */}
@@ -229,17 +303,27 @@ function MobileFilterPanel() {
       {/* Kategori */}
       <Accordion type="single" collapsible defaultValue="kategori">
         <AccordionItem value="kategori" className="border-b">
-          <AccordionTrigger className="text-base font-medium">Kategori</AccordionTrigger>
+          <AccordionTrigger className="text-base font-medium">
+            Kategori
+          </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-2">
-              {["Buku MI", "Buku MTs", "Buku MA", "Buku PTAI", "Jurnal Ilmiah", "Sastra"].map((category) => (
-                <div key={category} className="flex items-center space-x-2">
-                  <Checkbox id={`mobile-category-${category.toLowerCase().replace(/\s+/g, "-")}`} />
+              {categoryData.map((category, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={`mobile-category-${category.Slug.toLowerCase().replace(
+                      /\s+/g,
+                      "-"
+                    )}`}
+                  />
                   <label
-                    htmlFor={`mobile-category-${category.toLowerCase().replace(/\s+/g, "-")}`}
+                    htmlFor={`mobile-category-${category.Slug.toLowerCase().replace(
+                      /\s+/g,
+                      "-"
+                    )}`}
                     className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    {category}
+                    {category.Title}
                   </label>
                 </div>
               ))}
@@ -248,10 +332,7 @@ function MobileFilterPanel() {
         </AccordionItem>
       </Accordion>
 
-
-
       <Button className="w-full">Terapkan Filter</Button>
     </div>
-  )
+  );
 }
-
