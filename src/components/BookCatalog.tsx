@@ -2,61 +2,45 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import BookCard from "./BookCard";
+import axios from "axios";
 
 
 
-const data = [
-  {
-    id: 1,
-    title: "A Cup of Coffee",
-    author: "Dee Lestari",
-    price: "77000",
-    coverImage: "https://picsum.photos/1920/720",
-    slug: "a-cup-of-coffee",
-  },
-  {
-    id: 2,
-    title: "Sebuah Seni Untuk Bersikap Bodo Amat",
-    author: "Mark Manson",
-    price: "53500",
-    coverImage: "https://picsum.photos/1920/720",
-    slug: "sebuah-seni-untuk-bersikap-bodo-amat",
-  },
-  {
-    id: 3,
-    title: "Winter",
-    author: "Marissa Meyer",
-    price: "97200",
-    coverImage: "https://picsum.photos/1920/720",
-    slug: "winter",
-  },
-  {
-    id: 4,
-    title: "The Maze Runner #3: The Scorch Trials - New",
-    author: "James Dashner",
-    price: "51750",
-    coverImage: "https://picsum.photos/1920/720",
-    slug: "the-maze-runner-3",
-  },
-  {
-    id: 5,
-    title: "Fantastic Beasts and Where to Find Them",
-    author: "J.K. Rowling",
-    price: "86150",
-    coverImage: "https://picsum.photos/1920/720",
-    slug: "fantastic-beasts",
-  },
-  {
-    id: 6,
-    title: "One Piece 92",
-    author: "Eiichiro Oda",
-    price: "77000",
-    coverImage: "https://picsum.photos/1920/720",
-    slug: "one-piece-92",
-  },
-];
+interface Books{
+  id_book: number
+  title: string
+  author: string
+  image: string
+  isbn: string
+  price: string
+}
 
-export default function BookCatalog() {
+async function GetLatestBooks(): Promise<Books[]> {
+  
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/latest`)
+
+  return response.data.data
+}
+
+async function GetRecomendationBooks(): Promise<Books[]>{
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/recommendations`)
+
+  return response.data.data
+}
+
+
+
+export default async function BookCatalog() {
+
+
+  const latest_book = await GetLatestBooks()
+  const recommendation_books = await GetRecomendationBooks()
+  console.log(recommendation_books);
+  
+
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Popular Section */}
@@ -78,8 +62,8 @@ export default function BookCatalog() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {data.map((book) => (
-            <BookCard key={book.id} imageSrc={book.coverImage} author={book.author} price={book.price} title={book.title}/>
+          {recommendation_books.map((book) => (
+            <BookCard key={book.id_book} imageSrc={book.image} author={book.author} price={book.price} title={book.title}/>
           ))}
         </div>
       </div>
@@ -93,8 +77,8 @@ export default function BookCatalog() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {data.map((book) => (
-            <BookCard key={book.id} imageSrc={book.coverImage} author={book.author} price={book.price} title={book.title}/>
+          {latest_book.map((book) => (
+            <BookCard key={book.id_book} imageSrc={book.image} author={book.author} price={book.price} title={book.title}/>
           ))}
         </div>
       </div>

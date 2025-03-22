@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+
 import {
   Carousel,
   CarouselContent,
@@ -8,30 +9,23 @@ import {
 } from "@/components/ui/carousel";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import axios from "axios";
 
-function HeaderCarousel() {
-  const featuredBooks = [
-    {
-      id: 1,
-      title: "",
-      coverImage: "https://picsum.photos/1920/720",
-    },
-    {
-      id: 2,
-      title: "",
-      coverImage: "https://picsum.photos/1920/720",
-    },
-    {
-      id: 3,
-      title: "",
-      coverImage: "https://picsum.photos/1920/720",
-    },
-    {
-      id: 4,
-      title: "",
-      coverImage: "https://picsum.photos/1920/720",
-    },
-  ];
+interface CarouselProps {
+  image: string;
+  description: string;
+}
+
+async function GetCarousel() {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/image-slider`
+  );
+
+  return response.data.data;
+}
+
+async function HeaderCarousel() {
+  const carousel_data: Array<CarouselProps> = await GetCarousel();
 
   return (
     <div className="w-full">
@@ -40,18 +34,18 @@ function HeaderCarousel() {
           <CarouselItem className="relative flex h-99">
             <SearchCorusel />
           </CarouselItem>
-          {featuredBooks.map((item) => {
-            return (
-              <CarouselItem key={item.id} className="relative flex h-99">
-                <img
-                  className="absolute h-full object-cover w-full"
-                  src={item.coverImage}
-                  alt={item.title}
-                />
-                <h1 className="absolute right-0 bottom-0 p-4">{item.title}</h1>
-              </CarouselItem>
-            );
-          })}
+          {carousel_data.map((item, index) => (
+            <CarouselItem key={index} className="relative flex h-99">
+              <img
+                className="absolute h-full object-cover w-full"
+                src={`${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${item.image}`}
+                alt={item.description}
+              />
+              <h1 className="absolute right-0 bottom-0 p-4">
+                {item.description}
+              </h1>
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <div className="absolute top-1/2 left-2 flex items-center justify-center">
           <CarouselPrevious className="relative left-0 translate-x-0 hover:translate-x-0 hover:bg-primary/90" />
@@ -72,7 +66,10 @@ function SearchCorusel() {
         <h2>Akses di mana pun, kapan pun, Baca buku yuk!</h2>
       </div>
       <div className="flex mt-5 gap-4">
-        <Input className="rounded border lg:w-96" placeholder="Cari Buku Disini"/> 
+        <Input
+          className="rounded border lg:w-96"
+          placeholder="Cari Buku Disini"
+        />
         <Button type="button">CARI</Button>
       </div>
     </div>

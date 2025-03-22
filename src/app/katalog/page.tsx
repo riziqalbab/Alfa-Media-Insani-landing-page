@@ -27,10 +27,7 @@ import { RevealOnScroll } from "@/components/ui/reveal-on-scroll";
 import { useContext, useEffect, useState } from "react";
 
 import axios from "axios";
-import {
-  CategoryContext,
-  CategoryContextProvider,
-} from "@/context/categoryContext";
+import { FilterContext, FilterContextProvider } from "@/context/FilterContext";
 
 interface Category {
   Title: string;
@@ -45,28 +42,33 @@ interface Book {
   image: string;
 }
 
-
-export default function Page(){
+export default function Page() {
   return (
-    <CategoryContextProvider>
+    <FilterContextProvider>
       <KatalogPage />
-    </CategoryContextProvider>
+    </FilterContextProvider>
   );
 }
 
- function KatalogPage() {
-  const categoryContext = useContext(CategoryContext);
+function KatalogPage() {
+  const categoryContext = useContext(FilterContext);
 
   const [books, setBooks] = useState<Array<Book>>();
 
-  useEffect(() => {
+  useEffect(() => {    
+
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books?category=${categoryContext.category.join(",")}`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
-      })
+      .get(
+        `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api/v1/books?${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
         setBooks(res.data.data);
       });
@@ -187,14 +189,15 @@ export default function Page(){
 }
 
 function FilterPanel() {
-  const categoryContext = useContext(CategoryContext);
+  const filterContext = useContext(FilterContext);
 
-  const { category, changeCategory } = categoryContext;
+  const { setSearchValue, changeCategory } = filterContext;
 
   const [categoryData, setCategoryData] = useState<Array<Category>>([]);
   const [selectedCategories, setSelectedCategories] = useState<Array<string>>(
     []
   );
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     axios
@@ -219,11 +222,9 @@ function FilterPanel() {
 
   const handleApplyFilter = () => {
     changeCategory(selectedCategories);
+    setSearchValue(search);
   };
 
-  useEffect(() => {
-    console.log(category);
-  }, [category]);
 
   return (
     <div className="space-y-6">
@@ -231,7 +232,7 @@ function FilterPanel() {
       <div>
         <div className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <Input placeholder="Cari buku..." className="pl-10" />
+          <Input onChange={(e) => setSearch(e.target.value)} placeholder="Cari buku..." className="pl-10" />
         </div>
       </div>
 

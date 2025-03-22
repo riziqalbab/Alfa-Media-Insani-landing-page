@@ -14,7 +14,7 @@ function BookCard({ imageSrc, title, author, price }: BookCardProps) {
     <Link href="katalog/test" className="group relative flex flex-col overflow-hidden rounded-lg border bg-white">
       <div className="relative aspect-[3/4] bg-gray-100">
         <img
-          src={imageSrc || "https://placehold.co/600x400"}
+          src={`${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${imageSrc}` || "https://placehold.co/600x400"}
           alt={title}
           
           className="object-cover transition-transform group-hover:scale-105"
