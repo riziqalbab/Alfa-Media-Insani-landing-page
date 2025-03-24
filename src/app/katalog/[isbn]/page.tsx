@@ -1,10 +1,46 @@
 /* eslint-disable @next/next/no-img-element */
 
+import BookCard from "@/components/BookCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import GetRecomendationBooks from "@/data/GetRecomendedBooks";
+import axios from "axios";
 import Link from "next/link";
 
-export default function BookDetailPage() {
+interface DetailBook {
+  id_book: number;
+  title: string;
+  author: string;
+  image: string;
+  isbn: string;
+  price: string;
+  description: string;
+  publish_year: number;
+  publisher: string;
+  category: {
+    CategoryID: number;
+    Title: string;
+    Slug: string;
+  };
+}
+
+async function GetDetailBook(isbn: string): Promise<DetailBook> {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${isbn}`
+  );
+
+  return response.data.data;
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ isbn: string }>;
+}) {
+  const isbn = (await params).isbn;
+  const book = await GetDetailBook(isbn);
+  const recommendation_books = await GetRecomendationBooks();
+
   return (
     <div className="container mx-auto px-4 py-6 max-w-7xl">
       <div className="flex text-sm mb-6">
@@ -16,9 +52,7 @@ export default function BookDetailPage() {
           Katalog
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-gray-600">
-          Panduan Guru: Belajar dan Bermain Berbasis Buku (Edisi Revisi)
-        </span>
+        <span className="text-gray-600">{book.title}</span>
       </div>
 
       {/* Main Book Detail Card */}
@@ -29,7 +63,10 @@ export default function BookDetailPage() {
             <div className="flex-shrink-0 w-full md:w-64">
               <div className="bg-white p-2 rounded-md shadow-md">
                 <img
-                  src="https://cdn.gramedia.com/uploads/picture_meta/2024/1/8/m5b3gwzj4fpaxwq7lk4b9s.jpg"
+                  src={
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${book.image}` ||
+                    "https://placehold.co/600x400"
+                  }
                   alt="Cover Buku Panduan Guru"
                   width={250}
                   height={350}
@@ -41,26 +78,15 @@ export default function BookDetailPage() {
             {/* Book Info */}
             <div className="flex-1">
               <div className="inline-block px-3 py-1 text-sm font-medium text-red-600 bg-white rounded-full border border-red-500 mb-4">
-                KATEGORI
+                {book.category.Title}
               </div>
 
               <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
-                MADILOG
+                {book.title.toUpperCase()}
               </h1>
               {/* Synopsis */}
               <div className="prose max-w-none mb-8">
-                <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Voluptatem ad et autem ipsum dignissimos minima, numquam ex
-                  porro officia ipsam qui laboriosam saepe recusandae dolor
-                  praesentium ea blanditiis nostrum? Suscipit?
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Magnam ducimus facere culpa dolores laboriosam recusandae.
-                  Sequi totam, alias, iure quibusdam a temporibus iste impedit
-                  magni optio ipsa adipisci. Voluptatum, placeat!
-                </p>
+                <p>{book.description}</p>
               </div>
 
               {/* Book Details */}
@@ -74,26 +100,28 @@ export default function BookDetailPage() {
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Penerbit
                   </dt>
-                  <dd className="text-gray-800 col-span-2">Pusat Perbukuan</dd>
+                  <dd className="text-gray-800 col-span-2">{book.publisher}</dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     ISBN
                   </dt>
-                  <dd className="text-gray-800 col-span-2">
-                    122112121212
-                  </dd>
+                  <dd className="text-gray-800 col-span-2">{book.isbn}</dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
-                    Edisi
+                    Harga
                   </dt>
-                  <dd className="text-gray-800 col-span-2">Versi Majalah Tempo</dd>
+                  <dd className="text-gray-800 col-span-2">{book.price}</dd>
+                  <dt className="font-semibold text-gray-700 col-span-1">
+                    Tahun Terbit
+                  </dt>
+                  <dd className="text-gray-800 col-span-2">
+                    {book.publish_year}
+                  </dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Penulis
                   </dt>
-                  <dd className="text-gray-800 col-span-2">
-                    Tan Malaka
-                  </dd>
+                  <dd className="text-gray-800 col-span-2">Tan Malaka</dd>
                 </dl>
               </div>
             </div>
@@ -115,12 +143,21 @@ export default function BookDetailPage() {
         </CardContent>
       </Card>
 
-      
-
       <h2 className="text-2xl font-bold mb-4 text-gray-800">
         Rekomendasi buku lainnya
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7 gap-6">
+        {recommendation_books.map((book) => (
+          <BookCard
+            key={book.id_book}
+            imageSrc={book.image}
+            author={book.author}
+            price={book.price}
+            title={book.title}
+            isbn={book.isbn}
+          />
+        ))}
+      </div>
     </div>
   );
 }

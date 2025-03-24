@@ -168,10 +168,11 @@ function KatalogPage() {
                   <Link href={`/buku/${book.isbn}-${book.title}`}>
                     <div className="relative">
                       <BookCard
-                        imageSrc={`${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${book.image}`}
+                        imageSrc={book.image}
                         title={book.title}
                         author={book.author}
                         price={book.price}
+                        isbn={book.isbn}
                       />
                     </div>
                   </Link>

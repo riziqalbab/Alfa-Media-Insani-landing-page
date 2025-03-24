@@ -1,22 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 
-import Link from "next/link"
+import Link from "next/link";
 
 interface BookCardProps {
-  imageSrc: string
-  title: string
-  author: string
-  price: string
+  imageSrc: string;
+  title: string;
+  author: string;
+  price: string;
+  isbn: string;
 }
 
-function BookCard({ imageSrc, title, author, price }: BookCardProps) {
+function BookCard({ imageSrc, title, author, price, isbn }: BookCardProps) {
   return (
-    <Link href="katalog/test" className="group relative flex flex-col overflow-hidden rounded-lg border bg-white">
+    <Link
+      href={`/katalog/${isbn}`}
+      className="group relative flex flex-col overflow-hidden rounded-lg border bg-white"
+    >
       <div className="relative aspect-[3/4] bg-gray-100">
         <img
-          src={`${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${imageSrc}` || "https://placehold.co/600x400"}
+          src={
+            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${imageSrc}` ||
+            "https://placehold.co/600x400"
+          }
           alt={title}
-          
           className="object-cover transition-transform group-hover:scale-105"
         />
       </div>
@@ -25,14 +31,11 @@ function BookCard({ imageSrc, title, author, price }: BookCardProps) {
         <p className="text-sm text-gray-500">{author}</p>
         <div className="flex items-center justify-between">
           <p className="font-bold">{price}</p>
-          <div className="flex gap-2">
-            
-          </div>
+          <div className="flex gap-2"></div>
         </div>
       </div>
     </Link>
-  )
+  );
 }
 
-
-export default BookCard
+export default BookCard;
