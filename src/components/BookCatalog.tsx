@@ -8,7 +8,6 @@ import GetLatestBooks from "@/data/GetLatestBooks";
 export default async function BookCatalog() {
   const latest_book = await GetLatestBooks();
   const recommendation_books = await GetRecomendationBooks();
-  console.log(recommendation_books);
 
   return (
     <div className="container mx-auto px-4 py-8">
