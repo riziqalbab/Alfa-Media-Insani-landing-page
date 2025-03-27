@@ -32,3 +32,9 @@ interface Book {
   publisher: string;
   category: Category;
 }
+
+interface ImageSliderType {
+  ID: number;
+  description: string;
+  image: string;
+}

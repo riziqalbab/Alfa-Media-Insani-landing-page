@@ -1,4 +1,4 @@
-import { Book, Calendar, Home, Inbox, List, Search, Settings } from "lucide-react"
+import { Book, Calendar, Home, Image, Inbox, List, Search, Settings } from "lucide-react"
 
 import {
   Sidebar,
@@ -23,6 +23,11 @@ const items = [
     title: "Kategori",
     url: "/admin/kategori",
     icon: List,
+  },
+  {
+    title: "Image Slider",
+    url: "/admin/image-slider",
+    icon: Image,
   },
 ]
 
