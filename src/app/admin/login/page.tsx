@@ -1,20 +1,27 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import { useAuth } from "@/context/AuthContext"
 
 import { ToastContainer, toast } from 'react-toastify';
+import { redirect } from "next/navigation"
 
 
 export default function AdminLoginPage() {
 
-const auth = useAuth()
+  const auth = useAuth()
+
+
+  useEffect(() => {
+    if (auth.isLoggedIn && auth.isLoggedIn != null) {
+      redirect("/admin")
+    }
+  }, [auth.isLoggedIn])
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -23,7 +30,7 @@ const auth = useAuth()
     e.preventDefault()
 
     const loadingToast = toast.loading('Logging in...');
-    
+
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/login`, {
       username: username,
       password: password
@@ -39,7 +46,7 @@ const auth = useAuth()
       const accessToken = res.data.access_token
       auth.login(accessToken)
     }).catch((err) => {
-      if(err.status == 401){
+      if (err.status == 401) {
         toast.update(loadingToast, {
           render: 'Password atau username salah',
           type: 'error',
@@ -47,16 +54,16 @@ const auth = useAuth()
           autoClose: 2000,
         });
       }
-      
+
     })
   }
 
 
 
   return (
-    
-       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center relative overflow-hidden">
-        <ToastContainer />
+
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center relative overflow-hidden">
+      <ToastContainer />
       {/* <GeometricPattern variant="dots" className="inset-0 text-primary" /> */}
       <div className="w-full max-w-md z-10">
         <div className="bg-white rounded-lg shadow-lg border p-8">
@@ -75,9 +82,7 @@ const auth = useAuth()
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/admin/forgot-password" className="text-sm text-primary hover:underline">
-                  Lupa password?
-                </Link>
+
               </div>
               <Input id="password" type="password" placeholder="••••••••" onChange={(e) => { setPassword(e.target.value) }} />
             </div>
@@ -89,14 +94,6 @@ const auth = useAuth()
             </div>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
-            <p>
-              Kembali ke{" "}
-              <Link href="/" className="text-primary hover:underline">
-                Website Utama
-              </Link>
-            </p>
-          </div>
         </div>
       </div>
     </div>

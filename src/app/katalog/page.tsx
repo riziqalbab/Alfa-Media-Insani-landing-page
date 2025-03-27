@@ -10,8 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-// import { useSearchParams } from "next/navigation";
+} from "@/components/ui/select";  
 
 import {
   Accordion,
@@ -29,18 +28,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FilterContext, FilterContextProvider } from "@/context/FilterContext";
 
-interface Category {
-  Title: string;
-  Slug: string;
-}
 
-interface Book {
-  isbn: string;
-  author: string;
-  title: string;
-  price: string;
-  image: string;
-}
 
 export default function Page() {
   return (
@@ -52,27 +40,19 @@ export default function Page() {
 
 function KatalogPage() {
   const categoryContext = useContext(FilterContext);
-
   const [books, setBooks] = useState<Array<Book>>();
 
-  useEffect(() => {    
-
+  useEffect(() => {
     axios
       .get(
-        `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api/v1/books?${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        }
-      )
+        `${process.env.NEXT_PUBLIC_API_URL
+        }/api/v1/books?${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`)
       .then((res) => {
         setBooks(res.data.data);
       });
   }, [categoryContext]);
+
+  
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">

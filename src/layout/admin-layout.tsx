@@ -1,11 +1,16 @@
-import { AuthContextProvider } from "@/context/AuthContext";
+import { AdminSidebar } from "@/components/admin-sidebar"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
-function AdminLayout({ children }: { children: React.ReactNode }) {
-    return (
-        <AuthContextProvider>
-            {children}
-        </AuthContextProvider>
-    );
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      <AdminSidebar />
+      <SidebarInset>
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
-
-export default AdminLayout;

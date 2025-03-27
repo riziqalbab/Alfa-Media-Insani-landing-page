@@ -8,8 +8,27 @@ interface Books {
 }
 
 interface AuthContextType {
-  isLoggedIn: boolean;
+  isLoggedIn: boolean | null;
   accessToken: string;
   login: (accessToken: string) => void;
   logout: () => void;
+}
+
+interface Category {
+  CategoryID: number;
+  Title: string;
+  Slug: string;
+}
+
+interface Book {
+  id_book: number;
+  isbn: string;
+  author: string;
+  title: string;
+  price: string;
+  image: string;
+  description: string;
+  publish_year: number;
+  publisher: string;
+  category: Category;
 }

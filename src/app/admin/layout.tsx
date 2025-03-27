@@ -1,15 +1,16 @@
 "use client"
 
 import { AuthContextProvider } from '@/context/AuthContext';
-import { ClientAuthProvider } from '@/context/ClientAuthProvider';
+import { DataContextProvider } from '@/context/DataContext';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function Layouts({ children }: { children: React.ReactNode }) {
   return (
     <div className="admin-layout">
       <AuthContextProvider>
-        {children}
+        <DataContextProvider>
+          {children}
+        </DataContextProvider>
       </AuthContextProvider>
-      
     </div>
   );
 }
