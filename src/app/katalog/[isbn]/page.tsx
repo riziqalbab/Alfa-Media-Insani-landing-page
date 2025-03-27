@@ -121,7 +121,7 @@ export default async function Page({
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Penulis
                   </dt>
-                  <dd className="text-gray-800 col-span-2">Tan Malaka</dd>
+                  <dd className="text-gray-800 col-span-2">{book.author}</dd>
                 </dl>
               </div>
             </div>

@@ -13,7 +13,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -46,9 +46,7 @@ export default function AdminBooksPage() {
     const [totalData, setTotalData] = useState(0)
     const [books, setBooks] = useState<Array<Books>>([])
     const [isEditing, setIsEditing] = useState(false);
-
-    const [isLoading, setIsloading] = useState(false)
-
+    const [isDeleting, setIsDeleting] = useState(false)
 
     const [categories, setCategories] = useState<any>()
     const [title, setTitle] = useState<string>()
@@ -60,19 +58,23 @@ export default function AdminBooksPage() {
     const [description, setDescription] = useState<string>()
     const [cover, setCover] = useState<File>()
 
+    const [idDeleteBook, setIdDeleteBook] = useState<number>()
 
     const [currentBook, setCurrentBook] = useState<Book>({} as Book)
-    const [isOpen, setIsOpen] = useState(false)
-
-
     const dataContext = useDataContext()
 
-    useEffect(() => {
+
+    const fetchBooks = () => {
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books?page=${page}&limit=10`).then((response) => {
             setBooks(response.data.data)
             setTotalPage(response.data.total_page)
             setTotalData(response.data.total_data)
         })
+    }
+
+
+    useEffect(() => {
+        fetchBooks()
     }, [page])
 
 
@@ -102,6 +104,37 @@ export default function AdminBooksPage() {
                 error: 'Gagal Mengubah Buku'
             }
         );
+
+        if (response.status === 200) {
+            setIsEditing(false)
+            fetchBooks()
+        }
+    }
+
+    const handleDeleteBook = async () => {
+        const response = await toast.promise(
+            axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${idDeleteBook}`, {
+                headers: {
+                    Authorization: `Bearer ${auth.accessToken}`
+                }
+            }),
+            {
+                pending: 'Tunggu sebentar',
+                success: 'Berhasil Menghapus Buku',
+                error: 'Gagal Menghapus Buku'
+            }
+        );
+
+        if (response.status === 200) {
+            setIsDeleting(false)
+            fetchBooks()
+        }
+    }
+
+
+    const startDelete = (id_book: number) => {
+        setIsDeleting(true);
+        setIdDeleteBook(id_book)
     }
 
     const startEdit = (book: Books) => {
@@ -122,6 +155,8 @@ export default function AdminBooksPage() {
         setPublishDate(currentBook.publish_year)
         setDescription(currentBook.description)
     }, [currentBook])
+
+
 
 
 
@@ -246,7 +281,7 @@ export default function AdminBooksPage() {
                                                                 <span>Edit</span>
                                                             </DropdownMenuItem>
                                                             <DropdownMenuSeparator />
-                                                            <DropdownMenuItem className="flex items-center gap-2 text-red-500">
+                                                            <DropdownMenuItem className="flex items-center gap-2 text-red-500" onClick={() => startDelete(book.id_book)} >
                                                                 <Trash2 className="h-4 w-4" />
                                                                 <span>Hapus</span>
                                                             </DropdownMenuItem>
@@ -283,6 +318,32 @@ export default function AdminBooksPage() {
                     </Card>
                 </RevealOnScroll>
             </div>
+
+
+            <Dialog open={isDeleting} onOpenChange={setIsDeleting}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Yakin Buku ini akan dihapus?</DialogTitle>
+                        <DialogDescription>
+                            This action cannot be undone. This will permanently delete your account
+                            and remove your data from our servers.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <DialogClose onClick={() => setIsDeleting(false)}>Cancel</DialogClose>
+
+                        <Button
+                            variant="destructive"
+                            onClick={handleDeleteBook}
+                        >
+                            Delete
+                        </Button>
+
+                    </DialogFooter>
+
+                </DialogContent>
+            </Dialog>
+
 
             <Dialog open={isEditing} onOpenChange={setIsEditing}>
                 <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-screen h-screen">
