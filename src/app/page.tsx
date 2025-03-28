@@ -11,7 +11,7 @@ export default function Home() {
       <Navbar />
       <Header />
       <BookCatalog />
-      <Testimoni />
+      {/* <Testimoni /> */}
       <Footer />
     </>
   );

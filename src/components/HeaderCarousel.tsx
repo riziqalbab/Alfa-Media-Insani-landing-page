@@ -10,6 +10,7 @@ import {
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
+import Link from "next/link";
 
 interface CarouselProps {
   image: string;
@@ -66,11 +67,9 @@ function SearchCorusel() {
         <h2>Akses di mana pun, kapan pun, Baca buku yuk!</h2>
       </div>
       <div className="flex mt-5 gap-4">
-        <Input
-          className="rounded border lg:w-96"
-          placeholder="Cari Buku Disini"
-        />
-        <Button type="button">CARI</Button>
+        <Link href="/katalog">
+          <Button type="button">LIHAT KATALOG</Button>
+        </Link>
       </div>
     </div>
   );

@@ -7,22 +7,7 @@ import GetRecomendationBooks from "@/data/GetRecomendedBooks";
 import axios from "axios";
 import Link from "next/link";
 
-interface DetailBook {
-  id_book: number;
-  title: string;
-  author: string;
-  image: string;
-  isbn: string;
-  price: string;
-  description: string;
-  publish_year: number;
-  publisher: string;
-  category: {
-    CategoryID: number;
-    Title: string;
-    Slug: string;
-  };
-}
+
 
 async function GetDetailBook(isbn: string): Promise<DetailBook> {
   const response = await axios.get(

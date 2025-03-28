@@ -1,4 +1,4 @@
-import { Book, Calendar, Home, Image, Inbox, List, Search, Settings } from "lucide-react"
+import { Book, Calendar, Home, IdCard, Image, Inbox, List, Search, Settings } from "lucide-react"
 
 import {
   Sidebar,
@@ -28,6 +28,11 @@ const items = [
     title: "Image Slider",
     url: "/admin/image-slider",
     icon: Image,
+  },
+  {
+    title: "Company",
+    url: "/admin/company",
+    icon: IdCard,
   },
 ]
 

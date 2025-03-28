@@ -2,8 +2,14 @@
 import Link from "next/link";
 import FeaturedCategories from "./FeaturedCategories";
 import HeaderCarousel from "./HeaderCarousel";
+import GetCompany from "@/data/GetCompany";
 
-function Header() {
+async function Header() {
+
+  const company: CompanyType = await GetCompany();
+
+
+
   return (
     <div>
       <HeaderCarousel />
@@ -37,23 +43,12 @@ function Header() {
             {/* Right side with text content */}
             <div className="w-full md:w-1/2 md:pl-12">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Tentang Penerbit Alfa Media Insani
+                Tentang {company.Name}
               </h1>
               <div className="w-24 h-1 bg-primary mb-6 rounded-full"></div>
               <div className="space-y-4 text-gray-600 ">
                 <p>
-                  Alfa Media Insani adalah penerbitan buku ajar, buku referensi,
-                  buku monograf, buku umum, jurnal penelitian ilmiah hingga
-                  proceeding dalam bentuk cetak maupun E-Book. Dalam
-                  meningkatkan mutu produksi, Penerbit Alfa Media Insani
-                  membangun kerjasama intensif dan komunikatif guna pembangunan
-                  sumberdaya manusia yang berkualitas, kompeten, dan
-                  profesional.
-                </p>
-                <p>
-                  Menghadirkan kemudahan proses belajar mengajar di madrasah
-                  dengan memanfaatkan teknologi informasi terkini untuk mencetak
-                  generasi terbaik demi menyongsong Indonesia emas
+                  {company.About}
                 </p>
               </div>
 

@@ -183,10 +183,7 @@ function FilterPanel() {
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
+
       })
       .then((res) => {
         setCategoryData(res.data.data);
@@ -263,10 +260,6 @@ function MobileFilterPanel() {
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
       })
       .then((res) => {
         setCategoryData(res.data.data);
