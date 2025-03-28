@@ -1,4 +1,4 @@
-// import About from "@/components/About";
+import { Suspense } from 'react';
 import BookCatalog from "@/components/BookCatalog";
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
@@ -10,10 +10,12 @@ export default function Home() {
     <>
       <Navbar />
       <Header />
-      {/* <About /> */}
-      <BookCatalog />
-      {/* <Services /> */}
-      <Testimoni />
+      <Suspense fallback={<div>Loading...</div>}>
+        <BookCatalog />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Testimoni />
+      </Suspense>
       <Footer />
     </>
   );
