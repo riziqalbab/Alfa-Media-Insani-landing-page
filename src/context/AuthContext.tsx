@@ -33,7 +33,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         }, tokenExpirationTime - 60 * 1000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [refreshAccessToken]);
 
 
     const login = (accessToken: string) => {

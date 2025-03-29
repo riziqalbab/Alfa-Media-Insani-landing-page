@@ -12,9 +12,9 @@ async function GetDetailBook(isbn: string): Promise<DetailBook> {
 export async function generateMetadata({
   params,
 }: {
-  params: { isbn: string };
+  params: Promise<{ isbn: string }>;
 }): Promise<Metadata> {
-  const book = await GetDetailBook(params.isbn);
+  const book = await GetDetailBook((await params).isbn);
 
   return {
     title: `${book.title} | Detail Buku` || "Detail Buku",

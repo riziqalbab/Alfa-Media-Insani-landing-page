@@ -59,10 +59,6 @@ export default function CompanyIdentityForm() {
     const [defaultValues, setDefaultValues] = useState<Partial<CompanyFormValues>>({})
 
 
-    const fetchCompany = () => {
-
-    }
-
     useEffect(() => {
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/company`).then((response) => {
             setCompany(response.data.data)
