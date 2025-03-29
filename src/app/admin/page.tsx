@@ -36,10 +36,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { toast, ToastContainer } from "react-toastify"
 
 import { useAuth } from "@/context/AuthContext"
+import { redirect } from "next/navigation"
 
 export default function AdminBooksPage() {
 
     const auth = useAuth()
+
+    useEffect(() => {
+        if (!auth.isLoggedIn && auth.isLoggedIn != null) {
+          redirect("/admin/login")
+        }
+      }, [auth.isLoggedIn])
 
     const [page, setPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
