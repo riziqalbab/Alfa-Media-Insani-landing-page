@@ -1,21 +1,17 @@
+import GetDetailBook from "@/data/GetDetailBook";
 import axios from "axios";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-async function GetDetailBook(isbn: string): Promise<DetailBook> {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${isbn}`
-  );
 
-  return response.data.data;
-}
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ isbn: string }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const book = await GetDetailBook((await params).isbn);
-
+  const book = await GetDetailBook((await params).slug);
+  
   return {
     title: `${book.title} | Detail Buku` || "Detail Buku",
     description: book.description || "Informasi detail buku.",

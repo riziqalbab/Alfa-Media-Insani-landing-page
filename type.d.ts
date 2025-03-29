@@ -3,6 +3,8 @@ interface Books {
   title: string;
   author: string;
   image: string;
+  publisher: string;
+  slug: string;
   isbn: string;
   price: string;
 }
@@ -23,6 +25,7 @@ interface Category {
 interface Book {
   id_book: number;
   isbn: string;
+  slug: string;
   author: string;
   title: string;
   price: string;
@@ -51,8 +54,7 @@ interface CompanyType {
   Logo: string;
 }
 
-
-interface CompanyContextType{
+interface CompanyContextType {
   company: CompanyType | null;
   setCompany: (company: CompanyType) => void;
 }

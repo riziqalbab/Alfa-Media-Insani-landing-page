@@ -44,9 +44,9 @@ export default function AdminBooksPage() {
 
     useEffect(() => {
         if (!auth.isLoggedIn && auth.isLoggedIn != null) {
-          redirect("/admin/login")
+            redirect("/admin/login")
         }
-      }, [auth.isLoggedIn])
+    }, [auth.isLoggedIn])
 
     const [page, setPage] = useState(1)
     const [totalPage, setTotalPage] = useState(0)
@@ -74,18 +74,24 @@ export default function AdminBooksPage() {
     const fetchBooks = () => {
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books?page=${page}&limit=10`).then((response) => {
             setBooks(response.data.data)
+            console.log(response.data.data);
+
             setTotalPage(response.data.total_page)
             setTotalData(response.data.total_data)
         })
     }
 
 
+
+
     useEffect(() => {
         fetchBooks()
     }, [page])
 
-
     const handleEditBook = async () => {
+
+        console.log(currentBook);
+        
 
         const formData = new FormData()
         formData.append("author", author!)
@@ -99,7 +105,7 @@ export default function AdminBooksPage() {
         formData.append("image", cover!)
 
         const response = await toast.promise(
-            axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${currentBook.isbn}`, formData, {
+            axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${currentBook.slug}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${auth.accessToken}`
@@ -108,7 +114,11 @@ export default function AdminBooksPage() {
             {
                 pending: 'Tunggu sebentar',
                 success: 'Berhasil Mengubah Buku',
-                error: 'Gagal Mengubah Buku'
+                error: {
+                    render({ data }) {
+                        return (data as any).response.data.error
+                    }
+                }
             }
         );
 
@@ -145,7 +155,9 @@ export default function AdminBooksPage() {
     }
 
     const startEdit = (book: Books) => {
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${book.isbn}`).then((response) => {
+        console.log(book);
+        
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${book.slug}`).then((response) => {
             const book: Book = response.data.data
             setCurrentBook(book)
             setIsEditing(true);
@@ -238,8 +250,8 @@ export default function AdminBooksPage() {
                                                     <ArrowUpDown className="h-4 w-4" />
                                                 </div>
                                             </TableHead>
-                                            <TableHead>Harga</TableHead>
-                                            <TableHead>ISBN</TableHead>
+                                            <TableHead>Penulis</TableHead>
+                                            <TableHead>Penerbit</TableHead>
                                             <TableHead className="text-right">Aksi</TableHead>
                                         </TableRow>
                                     </TableHeader>
@@ -263,12 +275,11 @@ export default function AdminBooksPage() {
                                                         </div>
                                                         <div>
                                                             <div className="font-medium">{book.title}</div>
-                                                            <div className="text-sm text-gray-500">{book.author}</div>
                                                         </div>
                                                     </div>
                                                 </TableCell>
-                                                <TableCell>{book.price}</TableCell>
-                                                <TableCell>{book.isbn}</TableCell>
+                                                <TableCell>{book.author}</TableCell>
+                                                <TableCell>{book.publisher}</TableCell>
                                                 <TableCell className="text-right">
                                                     <DropdownMenu>
                                                         <DropdownMenuTrigger asChild>
@@ -281,7 +292,7 @@ export default function AdminBooksPage() {
                                                             <DropdownMenuSeparator />
                                                             <DropdownMenuItem className="flex items-center gap-2">
                                                                 <Eye className="h-4 w-4" />
-                                                                <Link href={`/katalog/${book.isbn}`}>Lihat</Link>
+                                                                <Link href={`/katalog/${book.slug}`}>Lihat</Link>
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem className="flex items-center gap-2" onClick={() => startEdit(book)}>
                                                                 <Edit className="h-4 w-4" />

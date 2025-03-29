@@ -3,28 +3,32 @@
 import BookCard from "@/components/BookCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import GetDetailBook from "@/data/GetDetailBook";
 import GetRecomendationBooks from "@/data/GetRecomendedBooks";
 import axios from "axios";
 import Link from "next/link";
-
-
-
-async function GetDetailBook(isbn: string): Promise<DetailBook> {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${isbn}`
-  );
-
-  return response.data.data;
-}
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,
 }: {
-  params: Promise<{ isbn: string }>;
+  params: { slug: string };
 }) {
-  const isbn = (await params).isbn;
-  const book = await GetDetailBook(isbn);
+  const slug = (await params).slug;
+
+  let book: DetailBook | null = null;
+
+  const response = await GetDetailBook(slug);
+
+  if (!response) notFound()
+
+
+  book = response;
+
+
   const recommendation_books = await GetRecomendationBooks();
+  console.log(recommendation_books);
+  
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-7xl">
@@ -37,7 +41,7 @@ export default async function Page({
           Katalog
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-gray-600">{book.title}</span>
+        <span className="text-gray-600">{book?.title}</span>
       </div>
 
       {/* Main Book Detail Card */}
@@ -49,10 +53,10 @@ export default async function Page({
               <div className="bg-white p-2 rounded-md shadow-md">
                 <img
                   src={
-                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${book.image}` ||
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/img/${book?.image}` ||
                     "https://placehold.co/600x400"
                   }
-                  alt="Cover Buku Panduan Guru"
+                  alt={book?.title || "Cover Buku"}
                   width={250}
                   height={350}
                   className="w-full h-auto rounded"
@@ -63,15 +67,15 @@ export default async function Page({
             {/* Book Info */}
             <div className="flex-1">
               <div className="inline-block px-3 py-1 text-sm font-medium text-red-600 bg-white rounded-full border border-red-500 mb-4">
-                {book.category.Title}
+                {book?.category?.Title}
               </div>
 
               <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
-                {book.title.toUpperCase()}
+                {book?.title?.toUpperCase()}
               </h1>
               {/* Synopsis */}
               <div className="prose max-w-none mb-8">
-                <p>{book.description}</p>
+                <p>{book?.description}</p>
               </div>
 
               {/* Book Details */}
@@ -85,45 +89,31 @@ export default async function Page({
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Penerbit
                   </dt>
-                  <dd className="text-gray-800 col-span-2">{book.publisher}</dd>
+                  <dd className="text-gray-800 col-span-2">{book?.publisher}</dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     ISBN
                   </dt>
-                  <dd className="text-gray-800 col-span-2">{book.isbn}</dd>
+                  <dd className="text-gray-800 col-span-2">{book?.isbn}</dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Harga
                   </dt>
-                  <dd className="text-gray-800 col-span-2">{book.price}</dd>
+                  <dd className="text-gray-800 col-span-2">{book?.price}</dd>
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Tahun Terbit
                   </dt>
                   <dd className="text-gray-800 col-span-2">
-                    {book.publish_year}
+                    {book?.publish_year}
                   </dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Penulis
                   </dt>
-                  <dd className="text-gray-800 col-span-2">{book.author}</dd>
+                  <dd className="text-gray-800 col-span-2">{book?.author}</dd>
                 </dl>
               </div>
             </div>
-          </div>
-
-          <div className="absolute top-4 right-4 opacity-30">
-            <svg width="100" height="100" viewBox="0 0 100 100">
-              <circle cx="20" cy="20" r="5" fill="#3a87ad" />
-              <circle cx="40" cy="10" r="4" fill="#3a87ad" />
-              <circle cx="60" cy="15" r="6" fill="#3a87ad" />
-              <circle cx="30" cy="30" r="3" fill="#3a87ad" />
-              <circle cx="50" cy="25" r="5" fill="#3a87ad" />
-              <circle cx="70" cy="30" r="4" fill="#3a87ad" />
-              <circle cx="20" cy="45" r="3" fill="#3a87ad" />
-              <circle cx="40" cy="40" r="5" fill="#3a87ad" />
-              <circle cx="60" cy="50" r="4" fill="#3a87ad" />
-            </svg>
           </div>
         </CardContent>
       </Card>
@@ -139,7 +129,7 @@ export default async function Page({
             author={book.author}
             price={book.price}
             title={book.title}
-            isbn={book.isbn}
+            slug={book.slug}
           />
         ))}
       </div>

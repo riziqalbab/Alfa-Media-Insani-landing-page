@@ -16,9 +16,7 @@ async function Footer() {
               <span className="text-xl font-bold">Alfa Media</span>
             </Link>
             <p className="text-gray-300 mb-4">
-              Penerbit buku ajar, buku referensi, buku monograf, buku umum,
-              jurnal penelitian ilmiah hingga proceeding dalam bentuk cetak
-              maupun E-Book.
+              {company.About}
             </p>
             
           </div>
@@ -28,46 +26,13 @@ async function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/buku-mi"
+                  href="/katalog"
                   className="text-gray-300 hover:text-white"
                 >
-                  Buku MI
+                  Katalog
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/buku-mts"
-                  className="text-gray-300 hover:text-white"
-                >
-                  Buku MTs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/buku-ma"
-                  className="text-gray-300 hover:text-white"
-                >
-                  Buku MA
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/buku-ptai"
-                  className="text-gray-300 hover:text-white"
-                >
-                  Buku PTAI
-                </Link>
-              </li>
-              <li>
-                <Link href="/jurnal" className="text-gray-300 hover:text-white">
-                  Jurnal Ilmiah
-                </Link>
-              </li>
-              <li>
-                <Link href="/sastra" className="text-gray-300 hover:text-white">
-                  Sastra
-                </Link>
-              </li>
+              
             </ul>
           </div>
 

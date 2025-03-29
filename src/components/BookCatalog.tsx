@@ -40,7 +40,7 @@ export default async function BookCatalog() {
               author={book.author}
               price={book.price}
               title={book.title}
-              isbn={book.isbn}
+              slug={book.slug}
             />
           ))}
         </div>
@@ -62,7 +62,7 @@ export default async function BookCatalog() {
               author={book.author}
               price={book.price}
               title={book.title}
-              isbn={book.isbn}
+              slug={book.slug}
             />
           ))}
         </div>

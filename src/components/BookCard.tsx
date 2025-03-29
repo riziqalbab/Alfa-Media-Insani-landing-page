@@ -7,13 +7,13 @@ interface BookCardProps {
   title: string;
   author: string;
   price: string;
-  isbn: string;
+  slug: string;
 }
 
-function BookCard({ imageSrc, title, author, price, isbn }: BookCardProps) {
+function BookCard({ imageSrc, title, author, price, slug }: BookCardProps) {
   return (
     <Link
-      href={`/katalog/${isbn}`}
+      href={`/katalog/${slug}`}
       className="group relative flex flex-col overflow-hidden rounded-lg border bg-white"
     >
       <div className="relative aspect-[3/4] bg-gray-100">
@@ -29,10 +29,6 @@ function BookCard({ imageSrc, title, author, price, isbn }: BookCardProps) {
       <div className="flex flex-col space-y-1.5 p-4">
         <h3 className="font-semibold line-clamp-1">{title}</h3>
         <p className="text-sm text-gray-500">{author}</p>
-        <div className="flex items-center justify-between">
-          <p className="font-bold">{price}</p>
-          <div className="flex gap-2"></div>
-        </div>
       </div>
     </Link>
   );

@@ -152,7 +152,7 @@ function KatalogPage() {
                         title={book.title}
                         author={book.author}
                         price={book.price}
-                        isbn={book.isbn}
+                        slug={book.slug}
                       />
                     </div>
                   </Link>
