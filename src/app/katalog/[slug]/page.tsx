@@ -12,7 +12,7 @@ import { notFound } from "next/navigation";
 export default async function Page({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   const slug = (await params).slug;
 

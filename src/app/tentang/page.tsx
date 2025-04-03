@@ -31,7 +31,9 @@ export default async function AboutUsPage() {
                 Siapa Kami
               </h2>
               <p className="text-muted-foreground md:text-lg">
-                {company.About}
+                <p>
+                  Alfa Media Insani adalah penerbitan buku ajar, buku referensi, buku monograf, buku umum, jurnal penelitian ilmiah hingga proceeding dalam bentuk cetak maupun E-Book. Dalam meningkatkan mutu produksi, Penerbit Alfa Media Insani membangun kerjasama intensif dan komunikatif guna pembangunan sumberdaya manusia yang berkualitas, kompeten, dan profesional.
+                </p>
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Button asChild>
@@ -59,7 +61,9 @@ export default async function AboutUsPage() {
                 Visi
               </h2>
               <p className="text-muted-foreground md:text-lg">
-                {company.Visi}
+                <p>
+                  Menghadirkan kemudahan proses belajar mengajar di madrasah dengan memanfaatkan teknologi informasi terkini untuk mencetak generasi terbaik demi menyongsong Indonesia emas
+                </p>
               </p>
             </div>
 
@@ -76,7 +80,19 @@ export default async function AboutUsPage() {
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-5 w-5 text-primary mt-0.5" />
                   <span>
-                    {company.Misi}
+                    Menjadi pusat kegiatan literasi, evaluasi, dan inovasi secara digital
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="text-primary mt-0.5" />
+                  <span>
+                    Menjadi pusat informasi dan konsultasi kegiatan pendidikan di lingkungan madrasah pada khususnya dan pendidikan nasional pada umumnya
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-primary mt-0.5" />
+                  <span>
+                    Menjadi mitra yang baik bagi madrasah dan lembaga pendidikan lainnya di Indonesia
                   </span>
                 </li>
               </ul>

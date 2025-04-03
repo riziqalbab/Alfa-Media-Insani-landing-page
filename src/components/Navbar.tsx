@@ -65,6 +65,11 @@ export default function Navbar() {
                     <NavigationMenuLink>Tentang</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Link href="/contact" legacyBehavior passHref>
+                    <NavigationMenuLink>Kontak</NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
                 
               </NavigationMenuList>
             </NavigationMenu>
@@ -85,78 +90,9 @@ export default function Navbar() {
             </Link>
             
             {/* Mobile Dropdown for Buku */}
-            <div className="py-2">
-              <div className="flex justify-between items-center text-white hover:text-gray-300">
-                <span>Buku</span>
-              </div>
-              <div className="pl-4 mt-2 space-y-2">
-                <Link 
-                  href="/buku-mi" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Buku MI
-                </Link>
-                <Link 
-                  href="/buku-mts" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Buku MTs
-                </Link>
-                <Link 
-                  href="/buku-ma" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Buku MA
-                </Link>
-                <Link 
-                  href="/buku-ptai" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Buku PTAI
-                </Link>
-              </div>
-            </div>
             
             {/* Mobile Dropdown for Layanan */}
-            <div className="py-2">
-              <div className="flex justify-between items-center text-white hover:text-gray-300">
-                <span>Layanan</span>
-              </div>
-              <div className="pl-4 mt-2 space-y-2">
-                <Link 
-                  href="/terbitkan-buku" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Menerbitkan Buku
-                </Link>
-                <Link 
-                  href="/konversi-buku" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Konversi Buku
-                </Link>
-                <Link 
-                  href="/pengadaan-buku" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Pengadaan Buku
-                </Link>
-                <Link 
-                  href="/kerjasama" 
-                  className="block py-1 text-white hover:text-gray-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Kerjasama Institusi
-                </Link>
-              </div>
-            </div>
+            
             
             <Link 
               href="/tentang" 
@@ -166,7 +102,7 @@ export default function Navbar() {
               Tentang
             </Link>
             <Link 
-              href="/kontak" 
+              href="/contact" 
               className="block py-2 text-white hover:text-gray-300"
               onClick={() => setMobileMenuOpen(false)}
             >
