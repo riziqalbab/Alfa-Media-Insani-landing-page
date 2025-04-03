@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -5,9 +8,24 @@ import BookCard from "./BookCard";
 import GetRecomendationBooks from "@/data/GetRecomendedBooks";
 import GetLatestBooks from "@/data/GetLatestBooks";
 
-export default async function BookCatalog() {
-  const latest_book = await GetLatestBooks();
-  const recommendation_books = await GetRecomendationBooks();
+export default function BookCatalog() {
+  const [latestBooks, setLatestBooks] = useState<Books[]>([]);
+  const [recommendationBooks, setRecommendationBooks] = useState<Books[]>([]);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const latest = await GetLatestBooks();
+        const recommendations = await GetRecomendationBooks();
+        setLatestBooks(latest);
+        setRecommendationBooks(recommendations);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -33,7 +51,7 @@ export default async function BookCatalog() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {recommendation_books.map((book) => (
+          {recommendationBooks.map((book) => (
             <BookCard
               key={book.id_book}
               imageSrc={book.image}
@@ -55,7 +73,7 @@ export default async function BookCatalog() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {latest_book.map((book) => (
+          {latestBooks.map((book) => (
             <BookCard
               key={book.id_book}
               imageSrc={book.image}
