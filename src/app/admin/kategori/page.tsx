@@ -13,11 +13,20 @@ import axios from 'axios';
 import { useDataContext } from '@/context/DataContext';
 import { useAuth } from '@/context/AuthContext';
 import { toast, ToastContainer } from 'react-toastify';
+import { redirect } from 'next/navigation';
 
 const BookCategoryManagement = () => {
+    const auth = useAuth()
+
+    useEffect(() => {
+        if (!auth.isLoggedIn && auth.isLoggedIn != null) {
+            redirect("/admin/login")
+        }
+    }, [auth.isLoggedIn])
+
+
 
     const dataContext = useDataContext()
-    const auth = useAuth()
     const [categories, setCategories] = useState<Array<Category>>([]);
 
     const [title, setTitle] = useState('');
