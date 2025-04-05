@@ -17,6 +17,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { toast, ToastContainer } from "react-toastify"
 import AdminLayout from "@/layout/admin-layout"
 import { useAuth } from "@/context/AuthContext"
+import { redirect } from "next/navigation"
 
 const companyFormSchema = z.object({
     name: z.string().min(2, {
@@ -54,6 +55,15 @@ type CompanyFormValues = z.infer<typeof companyFormSchema>
 
 
 export default function CompanyIdentityForm() {
+    const auth = useAuth()
+
+
+        useEffect(() => {
+            if (!auth.isLoggedIn && auth.isLoggedIn != null) {
+                redirect("/admin/login")
+            }
+        }, [auth.isLoggedIn])
+    
 
     const [company, setCompany] = useState<CompanyType>()
     const [defaultValues, setDefaultValues] = useState<Partial<CompanyFormValues>>({})
@@ -87,7 +97,6 @@ export default function CompanyIdentityForm() {
     }, [company, form]);
 
 
-    const auth = useAuth()
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [logoPreview, setLogoPreview] = useState<string | null>(null)
