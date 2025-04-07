@@ -3,6 +3,8 @@ import Link from "next/link";
 import FeaturedCategories from "./FeaturedCategories";
 import HeaderCarousel from "./HeaderCarousel";
 import GetCompany from "@/data/GetCompany";
+import SiswiPNG from "@/assets/img/siswi.png";
+import Image from "next/image";
 
 async function Header() {
 
@@ -31,8 +33,8 @@ async function Header() {
             <div className="relative w-full md:w-1/2 mb-8 md:mb-0">
               <div className="relative">
                 <div className="relative z-10 bg-emerald-100 rounded-lg overflow-hidden">
-                  <img
-                    src="https://digitalmadrasah.id/assets/images/siswi.png"
+                  <Image
+                    src={SiswiPNG}
                     alt=""
                     className="object-cover w-full max-w-xl"
                   />

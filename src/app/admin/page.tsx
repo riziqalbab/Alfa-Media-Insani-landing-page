@@ -60,6 +60,8 @@ export default function AdminBooksPage() {
     const [author, setAuthor] = useState<string>()
     const [price, setPrice] = useState<string>()
     const [isbn, setIsbn] = useState<string>()
+    const [weight, setWeight] = useState<string>()
+    const [bookPage, setBookPage] = useState<string>()
     const [publisher, setPublisher] = useState<string>()
     const [publishDate, setPublishDate] = useState<any>()
     const [description, setDescription] = useState<string>()
@@ -91,7 +93,7 @@ export default function AdminBooksPage() {
     const handleEditBook = async () => {
 
         console.log(currentBook);
-        
+
 
         const formData = new FormData()
         formData.append("author", author!)
@@ -101,8 +103,11 @@ export default function AdminBooksPage() {
         formData.append("price", price!)
         formData.append("publish_year", publishDate!)
         formData.append("publisher", publisher!)
+        formData.append("page", bookPage!)
+        formData.append("weight", weight!)
         formData.append("description", description!)
         formData.append("image", cover!)
+
 
         const response = await toast.promise(
             axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${currentBook.slug}`, formData, {
@@ -155,8 +160,7 @@ export default function AdminBooksPage() {
     }
 
     const startEdit = (book: Books) => {
-        console.log(book);
-        
+
         axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/book/${book.slug}`).then((response) => {
             const book: Book = response.data.data
             setCurrentBook(book)
@@ -171,11 +175,11 @@ export default function AdminBooksPage() {
         setIsbn(currentBook.isbn)
         setPrice(currentBook.price)
         setPublisher(currentBook.publisher)
+        setBookPage(currentBook.page?.toString())
+        setWeight(currentBook.weight?.toString())
         setPublishDate(currentBook.publish_year)
         setDescription(currentBook.description)
     }, [currentBook])
-
-
 
 
 
@@ -435,6 +439,14 @@ export default function AdminBooksPage() {
                                         <Input defaultValue={currentBook.isbn} id="new-isbn" placeholder="Contoh: 978-623-7891-xx-x" onChange={(e) => setIsbn(e.target.value)} />
                                     </div>
 
+                                    <div className="space-y-2">
+                                        <Label htmlFor="new-pages">Jumlah Halaman</Label>
+                                        <Input defaultValue={currentBook.page} id="new-pages" onChange={(e) => setBookPage(e.target.value)} />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="new-weight">Berat (Gram)</Label>
+                                        <Input defaultValue={currentBook.weight} id="new-weight" onChange={(e) => setWeight(e.target.value)} />
+                                    </div>
                                     <div className="space-y-2">
                                         <Label htmlFor="new-publisher">Penerbit</Label>
                                         <Input defaultValue={currentBook.publisher} id="new-publisher" onChange={(e) => setPublisher(e.target.value)} />

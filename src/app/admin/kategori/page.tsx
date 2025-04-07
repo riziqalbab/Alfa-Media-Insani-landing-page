@@ -64,7 +64,6 @@ const BookCategoryManagement = () => {
                 error: 'Gagal menambah kategori'
             }
             )
-            console.log(response.data);
             setCategories([...categories, response.data.data]);
             setTitle('');
             setSlug('');

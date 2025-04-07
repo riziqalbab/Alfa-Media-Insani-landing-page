@@ -18,17 +18,24 @@ export default async function Page({
 
   let book: DetailBook | null = null;
 
-  const response = await GetDetailBook(slug);
+  // Fetch book details
+  const response = await GetDetailBook(slug, { is_count: true });
 
-  if (!response) notFound()
+  console.log(response);
+  
 
-
+  if (!response) notFound();
   book = response;
 
+  // Increment view count
+  try {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/${slug}/view`, {});
+  } catch (error) {
+    console.error("Failed to increment view count:", error);
+  }
 
+  // Fetch recommendation books
   const recommendation_books = await GetRecomendationBooks();
-  console.log(recommendation_books);
-  
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-7xl">
@@ -106,11 +113,28 @@ export default async function Page({
                   <dd className="text-gray-800 col-span-2">
                     {book?.publish_year}
                   </dd>
+                  <dt className="font-semibold text-gray-700 col-span-1">
+                    Jumlah Halaman
+                  </dt>
+                  <dd className="text-gray-800 col-span-2">
+                    {book?.page} Halaman
+                  </dd>
+                  <dt className="font-semibold text-gray-700 col-span-1">
+                    Berat
+                  </dt>
+                  <dd className="text-gray-800 col-span-2">
+                    {book?.weight / 1000} Kg
+                  </dd>
 
                   <dt className="font-semibold text-gray-700 col-span-1">
                     Penulis
                   </dt>
                   <dd className="text-gray-800 col-span-2">{book?.author}</dd>
+
+                  <dt className="font-semibold text-gray-700 col-span-1">
+                    Jumlah Dilihat
+                  </dt>
+                  <dd className="text-gray-800 col-span-2">{book?.count || 0} kali</dd>
                 </dl>
               </div>
             </div>

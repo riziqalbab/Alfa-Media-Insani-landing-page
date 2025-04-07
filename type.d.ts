@@ -4,6 +4,8 @@ interface Books {
   author: string;
   image: string;
   publisher: string;
+  page: number;
+
   slug: string;
   isbn: string;
   price: string;
@@ -29,6 +31,8 @@ interface Book {
   author: string;
   title: string;
   price: string;
+  page: number;
+  weight: number; 
   image: string;
   description: string;
   publish_year: number;
@@ -64,6 +68,9 @@ interface DetailBook {
   title: string;
   author: string;
   image: string;
+  count: number;
+  weight: number;
+  page: number;
   isbn: string;
   price: string;
   description: string;
