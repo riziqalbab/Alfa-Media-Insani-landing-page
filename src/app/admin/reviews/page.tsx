@@ -69,7 +69,7 @@ export default function AdminReviewModeration() {
             <div className="p-6 space-y-4">
                 <h2 className="text-2xl font-bold">Moderasi Komentar</h2>
                 {reviews.length === 0 ? (
-                    <p className="text-gray-500">Ga ada komentar pending, admin bisa tidur.</p>
+                    <p className="text-gray-500">Tidak ada komentar</p>
                 ) : (
                     reviews.map(review => (
                         <Card key={review.IDReviewBook} className="border shadow-md">
