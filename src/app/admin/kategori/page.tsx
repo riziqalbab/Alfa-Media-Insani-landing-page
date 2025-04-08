@@ -19,10 +19,13 @@ const BookCategoryManagement = () => {
     const auth = useAuth()
 
     useEffect(() => {
-        if (!auth.isLoggedIn && auth.isLoggedIn != null) {
-            redirect("/admin/login")
+        if (auth.isLoggedIn === false) {
+            redirect("/admin/login");
         }
-    }, [auth.isLoggedIn])
+        if (auth.isLoggedIn && auth.userData?.role !== "admin") {
+            redirect("/");
+        }
+    }, [auth.isLoggedIn]);
 
 
 

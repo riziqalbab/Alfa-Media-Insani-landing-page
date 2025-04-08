@@ -14,6 +14,7 @@ interface Books {
 interface AuthContextType {
   isLoggedIn: boolean | null;
   accessToken: string;
+  userData: UserData | null;
   login: (accessToken: string) => void;
   logout: () => void;
 }
@@ -24,6 +25,13 @@ interface Category {
   Slug: string;
 }
 
+interface UserData {
+  id_user: number;
+  username: string;
+  email: string;
+  role: string;
+}
+
 interface Book {
   id_book: number;
   isbn: string;
@@ -32,7 +40,7 @@ interface Book {
   title: string;
   price: string;
   page: number;
-  weight: number; 
+  weight: number;
   image: string;
   description: string;
   publish_year: number;
@@ -63,9 +71,19 @@ interface CompanyContextType {
   setCompany: (company: CompanyType) => void;
 }
 
+interface ReviewType {
+  IDReviewBook: number;
+  id_book: number;
+  email: number;
+  full_name: string;
+  review: string;
+  rating: number;
+}
+
 interface DetailBook {
   id_book: number;
   title: string;
+  rating: number;
   author: string;
   image: string;
   count: number;

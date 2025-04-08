@@ -57,13 +57,17 @@ type CompanyFormValues = z.infer<typeof companyFormSchema>
 export default function CompanyIdentityForm() {
     const auth = useAuth()
 
+    useEffect(() => {
+        if (auth.isLoggedIn === false) {
+            redirect("/admin/login");
+        }
+        if (auth.isLoggedIn && auth.userData?.role !== "admin") {
+            redirect("/");
+        }
+    }, [auth.isLoggedIn]);
+7
 
-        useEffect(() => {
-            if (!auth.isLoggedIn && auth.isLoggedIn != null) {
-                redirect("/admin/login")
-            }
-        }, [auth.isLoggedIn])
-    
+
 
     const [company, setCompany] = useState<CompanyType>()
     const [defaultValues, setDefaultValues] = useState<Partial<CompanyFormValues>>({})
