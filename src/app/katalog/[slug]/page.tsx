@@ -6,8 +6,10 @@ import { Separator } from "@/components/ui/separator";
 import GetDetailBook from "@/data/GetDetailBook";
 import GetRecomendationBooks from "@/data/GetRecomendedBooks";
 import axios from "axios";
+import { Car, Star } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ReviewComment from "./review-comment";
 
 export default async function Page({
   params,
@@ -61,10 +63,28 @@ export default async function Page({
               </div>
             </div>
 
+
             {/* Book Info */}
             <div className="flex-1">
               <div className="inline-block px-3 py-1 text-sm font-medium text-red-600 bg-white rounded-full border border-red-500 mb-4">
                 {book?.category?.Title}
+              </div>
+              <div className="flex">
+                {[...Array(5)].map((_, i) => {
+                  const filled = i + 1 <= Math.floor(book?.rating);
+                  const half = i + 1 - book?.rating === 0.5;
+                  return (
+                    <div key={i} className="relative w-5 h-5">
+                      <Star className="w-5 h-5 text-gray-300" />
+                      <div
+                        className={`absolute top-0 left-0 h-full overflow-hidden ${half ? "w-1/2" : filled ? "w-full" : "w-0"
+                          }`}
+                      >
+                        <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
               <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
@@ -132,6 +152,9 @@ export default async function Page({
         </CardContent>
       </Card>
 
+      <div className="w-full">
+        <ReviewComment id_book={book.id_book} />
+      </div>
       <h2 className="text-2xl font-bold mb-4 text-gray-800">
         Rekomendasi buku lainnya
       </h2>

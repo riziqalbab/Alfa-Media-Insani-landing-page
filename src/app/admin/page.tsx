@@ -44,7 +44,7 @@ export default function AdminBooksPage() {
 
     useEffect(() => {
         if (auth.isLoggedIn === false) {
-            redirect("/admin/login");
+            redirect("/login");
         }
         if (auth.isLoggedIn && auth.userData?.role !== "admin") {
             redirect("/");

@@ -48,6 +48,11 @@ const items = [
     url: "/admin/company",
     icon: IdCard,
   },
+  {
+    title: "Reviews",
+    url: "/admin/reviews",
+    icon: List,
+  },
 ]
 
 export function AdminSidebar() {

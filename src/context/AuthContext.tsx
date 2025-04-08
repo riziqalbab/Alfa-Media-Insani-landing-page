@@ -21,6 +21,8 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh_token`, {}, {
             withCredentials: true
         }).then((res) => {
+            
+            
             const accessToken = res.data.access_token;
             const userData = res.data.data;
             setUserData(userData);
