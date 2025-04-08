@@ -4,21 +4,26 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const authContext = createContext<AuthContextType>({
+
     isLoggedIn: false,
     accessToken: "",
     login: () => { },
-    logout: () => { }
+    logout: () => { },
+    userData: null,
 })
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
     const [accessToken, setAccessToken] = useState<string>("");
+    const [userData, setUserData] = useState<UserData | null>(null);
 
     const refreshAccessToken = () => {
         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh_token`, {}, {
             withCredentials: true
         }).then((res) => {
             const accessToken = res.data.access_token;
+            const userData = res.data.data;
+            setUserData(userData);
             login(accessToken);
         }).catch((err) => {
             if (err.status == 401) logout();
@@ -33,7 +38,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         }, tokenExpirationTime - 60 * 1000);
 
         return () => clearInterval(interval);
-    }, [refreshAccessToken]);
+    }, [accessToken]);
 
 
     const login = (accessToken: string) => {
@@ -52,8 +57,9 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         setIsLoggedIn(false);
     }
 
+    
     return (
-        <authContext.Provider value={{ isLoggedIn, accessToken, login, logout }}>
+        <authContext.Provider value={{ isLoggedIn, userData, accessToken, login, logout }}>
             {children}
         </authContext.Provider>
     )

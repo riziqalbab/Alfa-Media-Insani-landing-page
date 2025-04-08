@@ -18,23 +18,13 @@ export default async function Page({
 
   let book: DetailBook | null = null;
 
-  // Fetch book details
   const response = await GetDetailBook(slug, { is_count: true });
 
   console.log(response);
-  
+
 
   if (!response) notFound();
   book = response;
-
-  // Increment view count
-  try {
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/books/${slug}/view`, {});
-  } catch (error) {
-    console.error("Failed to increment view count:", error);
-  }
-
-  // Fetch recommendation books
   const recommendation_books = await GetRecomendationBooks();
 
   return (

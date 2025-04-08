@@ -14,6 +14,7 @@ interface Books {
 interface AuthContextType {
   isLoggedIn: boolean | null;
   accessToken: string;
+  userData: UserData | null;
   login: (accessToken: string) => void;
   logout: () => void;
 }
@@ -22,6 +23,13 @@ interface Category {
   CategoryID: number;
   Title: string;
   Slug: string;
+}
+
+interface UserData{
+  id_user: number;
+  username: string;
+  email: string;
+  role: string;
 }
 
 interface Book {
