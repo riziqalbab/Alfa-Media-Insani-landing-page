@@ -4,13 +4,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import {
   Accordion,
@@ -28,8 +21,6 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FilterContext, FilterContextProvider } from "@/context/FilterContext";
 
-
-
 export default function Page() {
   return (
     <FilterContextProvider>
@@ -42,31 +33,20 @@ function KatalogPage() {
   const categoryContext = useContext(FilterContext);
   const [books, setBooks] = useState<Array<Book>>();
 
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-  const [totalData, setTotalData] = useState(0);
-
-
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/books?page=${page}&limit=10`
-      );
-      setBooks(response.data.data);
-      setTotalPage(response.data.total_page);
-      setTotalData(response.data.total_data);
-    } catch (error) {
-      console.error("Failed to fetch books:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchBooks();
-  }, [page]);
+    axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API_URL
+        }/api/v1/books?${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`)
+      .then((res) => {
+        setBooks(res.data.data);
+      });
+  }, [categoryContext]);
+
 
 
   return (
-    <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen p-5 bg-gray-50 relative overflow-hidden flex items-center justify-center">
       <div className="container py-8 relative z-10">
         {/* Breadcrumb */}
         <nav className="flex mb-6 text-sm">
@@ -130,28 +110,7 @@ function KatalogPage() {
 
           <div className="flex-1">
             {/* Sorting and View Options */}
-            <div className="bg-white p-4 rounded-lg shadow-sm mb-6 border flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <span className="text-sm text-gray-500">Urutkan:</span>
-                <Select defaultValue="terbaru">
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Urutkan" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="terbaru">Terbaru</SelectItem>
-                    <SelectItem value="terlaris">Terlaris</SelectItem>
-                    <SelectItem value="harga-terendah">
-                      Harga: Terendah
-                    </SelectItem>
-                    <SelectItem value="harga-tertinggi">
-                      Harga: Tertinggi
-                    </SelectItem>
-                    <SelectItem value="abjad-az">Judul: A-Z</SelectItem>
-                    <SelectItem value="abjad-za">Judul: Z-A</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
               {books?.map((book, index) => (
@@ -172,28 +131,7 @@ function KatalogPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex justify-center mt-12">
-              <div className="flex items-center justify-between mt-4">
-                <div className="text-sm text-gray-500">
-                  Menampilkan {books?.length} dari {totalData} buku
-                </div>
-                <div className="flex items-center gap-2">
-                  {page > 1 && (
-                    <Button variant="outline" size="sm" onClick={() => setPage(page - 1)}>
-                      Sebelumnya
-                    </Button>
-                  )}
-                  <Button variant="outline" size="sm" className="bg-primary/10">
-                    {page}
-                  </Button>
-                  {page < totalPage && (
-                    <Button variant="outline" size="sm" onClick={() => setPage(page + 1)}>
-                      Selanjutnya
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
+            <div className="flex justify-center mt-12"></div>
           </div>
         </div>
       </div>
@@ -286,24 +224,50 @@ function FilterPanel() {
   );
 }
 
+
 function MobileFilterPanel() {
+  const filterContext = useContext(FilterContext);
+
+  const { setSearchValue, changeCategory } = filterContext;
+
   const [categoryData, setCategoryData] = useState<Array<Category>>([]);
+  const [selectedCategories, setSelectedCategories] = useState<Array<string>>(
+    []
+  );
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category`, {
-      })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category`, {})
       .then((res) => {
         setCategoryData(res.data.data);
       });
   }, []);
+
+  const handleCheckboxChange = (slug: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(slug)
+        ? prev.filter((item) => item !== slug)
+        : [...prev, slug]
+    );
+  };
+
+  const handleApplyFilter = () => {
+    changeCategory(selectedCategories);
+    setSearchValue(search);
+  };
+
   return (
     <div className="space-y-6 p-10">
       {/* Pencarian */}
       <div>
         <div className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <Input placeholder="Cari buku..." className="pl-10" />
+          <Input
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Cari buku..."
+            className="pl-10"
+          />
         </div>
       </div>
 
@@ -322,6 +286,7 @@ function MobileFilterPanel() {
                       /\s+/g,
                       "-"
                     )}`}
+                    onCheckedChange={() => handleCheckboxChange(category.Slug)}
                   />
                   <label
                     htmlFor={`mobile-category-${category.Slug.toLowerCase().replace(
@@ -339,9 +304,9 @@ function MobileFilterPanel() {
         </AccordionItem>
       </Accordion>
 
-      <Button className="w-full">Terapkan Filter</Button>
-
-
+      <Button className="w-full" onClick={handleApplyFilter}>
+        Terapkan Filter
+      </Button>
     </div>
   );
 }

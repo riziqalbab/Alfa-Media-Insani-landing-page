@@ -22,6 +22,9 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
             withCredentials: true
         }).then((res) => {
             
+
+            console.log(res.data.data);
+            
             
             const accessToken = res.data.access_token;
             const userData = res.data.data;
