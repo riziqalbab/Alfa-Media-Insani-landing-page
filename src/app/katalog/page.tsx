@@ -33,15 +33,22 @@ function KatalogPage() {
   const categoryContext = useContext(FilterContext);
   const [books, setBooks] = useState<Array<Book>>();
 
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [totalData, setTotalData] = useState(0);
+
   useEffect(() => {
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL
-        }/api/v1/books?${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`)
+        }/api/v1/books?page=${page}&limit=1${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`)
       .then((res) => {
+        console.log(res.data);
+        setTotalData(res.data.total_data)
+        setTotalPage(res.data.total_page)
         setBooks(res.data.data);
       });
-  }, [categoryContext]);
+  }, [categoryContext, page]);
 
 
 
@@ -131,7 +138,30 @@ function KatalogPage() {
             </div>
 
             {/* Pagination */}
-            <div className="flex justify-center mt-12"></div>
+            <div className="flex justify-center mt-12">
+              <div className="flex justify-center mt-12">
+                <div className="flex items-center justify-between mt-4">
+                  <div className="text-sm text-gray-500">
+                    Menampilkan {books?.length} dari {totalData} buku
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {page > 1 && (
+                      <Button variant="outline" size="sm" onClick={() => setPage(page - 1)}>
+                        Sebelumnya
+                      </Button>
+                    )}
+                    <Button variant="outline" size="sm" className="bg-primary/10">
+                      {page}
+                    </Button>
+                    {page < totalPage && (
+                      <Button variant="outline" size="sm" onClick={() => setPage(page + 1)}>
+                        Selanjutnya
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -310,3 +340,5 @@ function MobileFilterPanel() {
     </div>
   );
 }
+
+
