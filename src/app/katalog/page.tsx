@@ -31,7 +31,7 @@ export default function Page() {
 
 function KatalogPage() {
   const categoryContext = useContext(FilterContext);
-  const [books, setBooks] = useState<Array<Book>>();
+  const [books, setBooks] = useState<Array<Books>>();
 
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
@@ -41,7 +41,7 @@ function KatalogPage() {
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL
-        }/api/v1/books?page=${page}&limit=1${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`)
+        }/api/v1/books?page=${page}&limit=20&${categoryContext.category.length > 0 ? `category=${categoryContext.category.join(",")}` : ``}&search=${categoryContext.search}`)
       .then((res) => {
         console.log(res.data);
         setTotalData(res.data.total_data)
@@ -125,7 +125,7 @@ function KatalogPage() {
                   <Link href={`/buku/${book.isbn}-${book.title}`}>
                     <div className="relative">
                       <BookCard
-                        imageSrc={book.image}
+                        imageSrc={book.thumbnail}
                         title={book.title}
                         author={book.author}
                         price={book.price}

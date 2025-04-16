@@ -5,6 +5,7 @@ interface Books {
   image: string;
   publisher: string;
   page: number;
+  thumbnail: string;
 
   slug: string;
   isbn: string;

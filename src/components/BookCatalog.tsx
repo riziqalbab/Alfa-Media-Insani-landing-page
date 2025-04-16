@@ -27,6 +27,13 @@ export default function BookCatalog() {
     fetchBooks();
   }, []);
 
+
+  useEffect(()=>{
+
+    console.log(latestBooks);
+    
+  }, [latestBooks])
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Popular Section */}
@@ -54,7 +61,7 @@ export default function BookCatalog() {
           {recommendationBooks.map((book) => (
             <BookCard
               key={book.id_book}
-              imageSrc={book.image}
+              imageSrc={book.thumbnail}
               author={book.author}
               price={book.price}
               title={book.title}
@@ -76,7 +83,7 @@ export default function BookCatalog() {
           {latestBooks.map((book) => (
             <BookCard
               key={book.id_book}
-              imageSrc={book.image}
+              imageSrc={book.thumbnail}
               author={book.author}
               price={book.price}
               title={book.title}
